@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { ToastAndroid } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Login() {
     let [data, setData] = useState('')
@@ -18,8 +19,22 @@ function Login() {
         setLoading(true)
         let url = 'http://192.168.0.10:8080/auth/signin'
         
+        let admin
+        let seller
         try {
             await axios.post(url, data).then(res => {
+                res.data.user.is_admin ? (admin = true) : (admin = false)
+                res.data.user.is_seller ? (seller = true) : (seller = false)
+                AsyncStorage.setItem('token', res.data.token)
+                AsyncStorage.setItem('user', JSON.stringify({
+                    name: res.data.user.name,
+                    photo: res.data.user.photo,
+                    // id: res.data.user._id,
+                    // mail: res.data.user.mail,
+                    // admin,
+                    // seller
+                }))
+
                 ToastAndroid.showWithGravity(res.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                 setTimeout(() => {
                     setLoading(false)
