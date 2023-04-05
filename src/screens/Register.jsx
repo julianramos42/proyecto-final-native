@@ -1,29 +1,82 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, ScrollView, Image, StyleSheet, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
-import Fieldsets from '../components/Fieldsets'
+import RegisterFieldsets from '../components/RegisterFieldsets'
+import axios from 'axios'
+import { useState } from 'react'
+import { ToastAndroid } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 function Register() {
+    let [data, setData] = useState('')
+    const [loading, setLoading] = useState(false);
+
+    const navigation = useNavigation()
+
+    async function handleSignUp() {
+        setLoading(true)
+        let url = 'http://192.168.0.10:8080/auth/signup'
+        
+        try {
+            await axios.post(url, data).then(res => {
+                ToastAndroid.showWithGravity(res.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                setTimeout(() => {
+                    setLoading(false)
+                    navigation.navigate('Login')
+                }, 3000)
+            })
+        } catch (error) {
+            setLoading(false)
+            if (error.code === "ERR_NETWORK") {
+                ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
+            } else {
+                if (typeof error.response.data.message === 'string') {
+                    ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                } else {
+                    error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                }
+            }
+        }
+    }
+
+    function handleLoginNavigate(){
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+            navigation.navigate('Login')
+        }, 1000)
+    }
+
+    function handleHomeNavigate(){
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+            navigation.navigate('Home')
+        }, 1000)
+    }
+
     return (
         <View style={styles.registerForm}>
             <View style={styles.registerText}>
-                <Text style={styles.registerTitle}>Sign Up</Text>
+                <Text style={styles.registerTitle}>Register</Text>
 
-                <Fieldsets />
+                <RegisterFieldsets setData={setData} />
 
-                <TouchableOpacity style={styles.signBtn}>
+                <TouchableOpacity style={styles.signBtn} onPress={handleSignUp}>
                     <Text style={styles.signBtnText}>Sign Up</Text>
                 </TouchableOpacity>
 
                 <View style={styles.bottomTextContainer}>
                     <Text style={styles.bottomText}>Already have an account? </Text>
-                    <Text style={styles.link}>Log In</Text>
+                    <Text style={styles.link} onPress={handleLoginNavigate}>Log In</Text>
                 </View>
                 <View style={styles.bottomTextContainer}>
                     <Text style={styles.bottomText}>Go back to </Text>
-                    <Text style={styles.link}>home page</Text>
+                    <Text style={styles.link} onPress={handleHomeNavigate}>home page</Text>
                 </View>
             </View>
+            <Spinner visible={loading} />
         </View>
     )
 }

@@ -1,16 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, TextInput, View, StyleSheet, Text } from 'react-native'
 import profile from '../../images/profile.png'
-import email from '../../images/email.png'
+import emailImg from '../../images/email.png'
 import lock from '../../images/lock.png'
 
-function Fieldsets() {
+function Fieldsets({setData}) {
+    let [name, setName] = useState('')
+    let [lastName, setLastName] = useState('')
+    let [email, setEmail] = useState('')
+    let [password, setPassword] = useState('')
+
+    useEffect( () => {
+        setData({
+            name: name,
+            last_name: lastName,
+            email: email,
+            password: password
+        })
+    },[name, lastName, email, password])
+
     return (
         <>
             <View style={styles.fieldset}>
                 <Text style={styles.legend}>Name</Text>
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.input} placeholder='Name' />
+                    <TextInput style={styles.input} placeholder='Name' onChangeText={text => {setName(text)}} />
                     <Image source={profile} style={styles.inputImg} alt='profile' />
                 </View>
             </View>
@@ -18,7 +32,7 @@ function Fieldsets() {
             <View style={styles.fieldset}>
                 <Text style={styles.legend}>Last Name</Text>
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.input} placeholder='Last Name' />
+                    <TextInput style={styles.input} placeholder='Last Name' onChangeText={text => {setLastName(text)}} />
                     <Image source={profile} style={styles.inputImg} alt='profile' />
                 </View>
             </View>
@@ -26,15 +40,15 @@ function Fieldsets() {
             <View style={styles.fieldset}>
                 <Text style={styles.legend}>Email</Text>
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.input} placeholder='email@gmail.com' />
-                    <Image source={email} style={styles.inputImg} alt='@' />
+                    <TextInput style={styles.input} placeholder='email@gmail.com' onChangeText={text => {setEmail(text)}} />
+                    <Image source={emailImg} style={styles.inputImg} alt='@' />
                 </View>
             </View>
 
             <View style={styles.fieldset}>
                 <Text style={styles.legend}>Password</Text>
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.input} placeholder='.........' />
+                    <TextInput secureTextEntry={true} style={styles.input} placeholder='.........' onChangeText={text => {setPassword(text)}} />
                     <Image source={lock} style={styles.inputImg} alt='lock' />
                 </View>
             </View>
