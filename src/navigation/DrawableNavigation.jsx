@@ -6,7 +6,8 @@ const Draw = createDrawerNavigator()
 
 function DrawableNavigation() {
   return (
-    <Draw.Navigator>
+    //screenOptions={{ headerTransparent:true}}
+    <Draw.Navigator screenOptions={{ headerTransparent:true}}>
         <Draw.Screen name='Home' component={Index}/>
     </Draw.Navigator>
   )
