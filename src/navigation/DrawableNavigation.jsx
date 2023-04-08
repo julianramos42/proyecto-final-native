@@ -2,6 +2,9 @@ import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import Customers from '../screens/Customers'
 import Contact from "../screens/Contact"
+import Index from '../screens/Index'
+import Stores from '../screens/Stores'
+
 
 const Draw = createDrawerNavigator()
 
