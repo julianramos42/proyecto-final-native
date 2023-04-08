@@ -12,7 +12,8 @@ export default function Description() {
         </View>        
         <View style={styles.text_description}>
             <Text style={styles.text}>your own terrarium, and then walk you through the process step-by-step to create your miniature environment with unique plants to take home.
-                    We’re excited to welcome you into our brand new workshop space located at 5-2501 Alyth Road SE, where you’ll enjoy a 1.5 – 2 hour interactive class. Please see the map for location details as all workshops are held at Plant Plant (our sister shop) just minutes away from our mainstreet Inglewood location.</Text>
+                    We’re excited to welcome you into our brand new workshop space located at 5-2501 Alyth Road SE, where you’ll enjoy a 1.5 – 2 hour interactive class. Please see the 
+                    map for location details as all workshops are held at Plant Plant (our sister shop) just minutes away from our mainstreet Inglewood location.</Text>
         </View>   
     </View>
   )
@@ -40,7 +41,6 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
-        borderBottomColor:'#081323',
         borderBottomWidth:2,
     },
     text_description:{

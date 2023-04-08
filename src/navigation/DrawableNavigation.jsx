@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from "@react-navigation/native";
 import { useState } from 'react'
 import Stores from '../screens/Stores'
+import Cart from '../screens/Cart'
 
 const Draw = createDrawerNavigator()
 
@@ -34,6 +35,7 @@ function DrawableNavigation() {
       <Draw.Screen name='Home' component={Index} />
       <Draw.Screen name='Stores' component={Stores} />
       <Draw.Screen name='Details' component={DetailsProduct}/>
+      <Draw.Screen name='Cart' component={Cart}/>
       <Draw.Screen name='Register' component={Register} options={{ headerShown: false }} />
       <Draw.Screen name='Login' component={Login} options={{ headerShown: false }} />
     </Draw.Navigator>
