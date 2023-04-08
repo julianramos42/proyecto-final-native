@@ -1,9 +1,15 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text,StatusBar,ScrollView } from 'react-native'
+import Home from '../screens/Home'
+import About from './About'
 
 function Index() {
   return (
-    <Text>Index</Text>
+    <ScrollView>
+      <Home/>
+      <About/>
+      <StatusBar style='auto'/>
+    </ScrollView> 
   )
 }
 
