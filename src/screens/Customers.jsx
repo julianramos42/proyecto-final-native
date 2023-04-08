@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import persona1 from "../../images/persona11.png"
 import persona2 from "../../images/persona21.png"
 import persona3 from "../../images/persona31.png"
@@ -37,7 +37,7 @@ image: persona3,
 const customer = customers[activeIndex];
 
 return (
-<View style={styles.customers}>
+<View style={styles.customers1}>
 
     <View style={styles.contTitleCustomers}>
         <Text style={styles.title}>Satisfied customers</Text>
@@ -84,10 +84,11 @@ return (
 </View>
 );
 }
-
+const altura = Dimensions.get('window').height;
 const styles = StyleSheet.create({
-customers: {
-    flex: 1,
+customers1: {
+    flex:1,
+    minHeight:altura,
 },
 contTitleCustomers: {
     marginVertical: 20,

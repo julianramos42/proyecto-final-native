@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import fondo from "../../images/Frame57.png"
 import { ImageBackground } from 'react-native';
 
 export default function Contact(){
   return (
-    <ImageBackground source={fondo} style={styles.contContact}>
+    <ImageBackground source={fondo} style={styles.contContact1}>
       <View style={styles.contTitleContact}>
         <Text style={styles.title}>Contact</Text>
       </View>
@@ -39,16 +39,15 @@ export default function Contact(){
     </ImageBackground>
   );
 };
-
+const altura = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     gradient: {
         flex: 1,
       },
-  contContact: {
-    flex: 1,
+  contContact1: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: "100%",
+    height: altura,
   },
   contTitleContact: {
     display: "flex",
