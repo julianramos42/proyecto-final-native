@@ -4,6 +4,9 @@ import Dropdowns from '../Dropdowns/Dropdowns'
 import CardProduct from '../CardProduct/CardProduct'
 
 export default function ProductsSections() {
+  const onPressFunction = () =>{
+    console.log('navegar a details');
+  }
   return (
     <View style={styles.cont_products}>
       <View style={styles.cat_sort}>
@@ -15,7 +18,7 @@ export default function ProductsSections() {
       </View>
       <ScrollView style={styles.allproducts}>
         {/* //enviar props con imagen,nombre y precio del producto */}
-        <CardProduct/>
+        <CardProduct press={onPressFunction}/>
         <CardProduct/>
         <CardProduct/>
         <CardProduct/>
