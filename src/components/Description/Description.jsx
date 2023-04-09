@@ -1,19 +1,17 @@
 import React from 'react'
 import { View,Text,StyleSheet } from 'react-native'
 
-export default function Description() {
+export default function Description(props) {
   return (
     <View style={styles.description}>
         <View style={styles.title}>
             <View style={styles.cont_des}>
                 <Text style={{fontSize:20,fontWeight:500}}>DESCRIPTION</Text>
             </View>
-            <Text style={{fontSize:14,fontWeight:400}}>Only 6 items in stock</Text>
+            <Text style={{fontSize:14,fontWeight:400}}>Only {props.stock} items in stock</Text>
         </View>        
         <View style={styles.text_description}>
-            <Text style={styles.text}>your own terrarium, and then walk you through the process step-by-step to create your miniature environment with unique plants to take home.
-                    We’re excited to welcome you into our brand new workshop space located at 5-2501 Alyth Road SE, where you’ll enjoy a 1.5 – 2 hour interactive class. Please see the 
-                    map for location details as all workshops are held at Plant Plant (our sister shop) just minutes away from our mainstreet Inglewood location.</Text>
+            <Text style={styles.text}>{props.des}</Text>
         </View>   
     </View>
   )

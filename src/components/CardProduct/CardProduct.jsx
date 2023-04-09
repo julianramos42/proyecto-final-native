@@ -3,14 +3,17 @@ import { View,Text,StyleSheet,TouchableOpacity,Image,Pressable } from 'react-nat
 
 export default function CardProduct(props) {
 
+  const onPressFunction = () =>{
+    console.log(props.id);//debo enviar este id a details por el navigation
+  }
   return (
     <View style={styles.contain}> 
-        <Pressable onPress={props.press}>
+        <Pressable onPress={onPressFunction}>
           {({ pressed }) => (
             <View style={[styles.contain_Card, pressed && styles.pressed]}>
-              <Image style={styles.img_product} source={require('../../../images/product.png')} resizeMode='cover'/>
-              <Text style={styles.name_product}>Monstera Deliciosa</Text>
-              <Text style={styles.price}>$89</Text>
+              <Image style={styles.img_product} source={{uri:props.img}} resizeMode='cover'/>
+              <Text style={styles.name_product}>{props.name}</Text>
+              <Text style={styles.price}>${props.price}</Text>
             </View>
           )}
         </Pressable>        

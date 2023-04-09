@@ -1,35 +1,77 @@
-import React from 'react'
+import React,{useState,useCallback} from 'react'
 import { View,Text,StyleSheet,ScrollView,Image,TouchableOpacity } from 'react-native'
 import InfoDetails from '../components/InfoDetails/InfoDetails';
 import ReturnDetails from '../components/ReturnDetails/ReturnDetails';
 import Description from '../components/Description/Description';
+import axios from 'axios'
+import { useFocusEffect } from '@react-navigation/native'
 
 export default function DetailsProduct() {
+
+    const [detail,setDetail] = useState({})
+    const [count,setCount] = useState(1)
+
+    const id = '642d8fd0f85ac25682438750'
+    let url = 'http://192.168.0.113:8080/product/' + id
+
+    useFocusEffect(
+        useCallback(()=>{
+            async function getDetail(){
+
+                try{
+                    const response = await axios.get(url)
+                    setDetail(response.data.product)
+
+                }catch(err){
+                    console.log(err);
+                }
+            }
+            getDetail()
+        },[])
+    )
+
+    const handleRest = () => {
+        if (count === 0){
+            console.log('no se puede sacar mas');//mensaje a mostrar en toast
+        }else{
+            setCount(count - 1)
+        }
+        
+    }
+
+    const handleSum = () => {
+        if(count === detail?.stock){
+            console.log('no hay mas stock');//mensaje de toast
+        }else{
+            setCount(count + 1)
+        }
+    }
+
     const handleCart = () => {
-        console.log('agregar a carrito')
+        console.log('agregar a carrito')//esto añade al carrito
     }
 
   return (
     <ScrollView style={styles.contain_details}> 
             <View style={styles.cont_img}>
                 <ReturnDetails/>
-                <InfoDetails/>
+                <InfoDetails photo={detail?.photo} category={detail?.category} name={detail?.name} price={detail?.price}/>
             </View>
             <View style={styles.cont_description}>
                 <View style={styles.count_item}>
                     <View style={styles.count}>
-                        <TouchableOpacity style={styles.btn_count}>
+                        <TouchableOpacity style={styles.btn_count} onPress={handleRest}>
                             <Text style={{fontSize:16,fontWeight:400}}>-</Text>
                         </TouchableOpacity>
                         <View style={styles.number}>
-                            <Text style={{fontSize:16,fontWeight:400}}>1</Text>
+                            <Text style={{fontSize:16,fontWeight:400}}>{count}</Text>
                         </View>
                         <TouchableOpacity style={styles.btn_count}>
-                            <Text style={{fontSize:16,fontWeight:400}}>+</Text>
+                            <Text style={{fontSize:16,fontWeight:400}} onPress={handleSum}>+</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Description/>
+                <Description des={detail?.description} stock={detail?.stock}/>
             </View>
             <View style={styles.cont_btn}>
                 <View style={styles.btn_cart}>

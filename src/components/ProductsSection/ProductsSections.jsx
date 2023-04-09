@@ -1,12 +1,32 @@
-import React from 'react'
-import { Text, View,StyleSheet,ScrollView,TouchableOpacity,Image } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { Text, View,StyleSheet,ScrollView,TouchableOpacity,Image,FlatList } from 'react-native'
 import Dropdowns from '../Dropdowns/Dropdowns'
 import CardProduct from '../CardProduct/CardProduct'
+import axios from 'axios'
+import { useFocusEffect } from '@react-navigation/native'
 
 export default function ProductsSections() {
-  const onPressFunction = () =>{
-    console.log('navegar a details');
-  }
+  
+  const [product,setProduct] = useState({})
+
+  const id = '642c487e7b721ca6a2bf0a47' //id que llega por params
+    let url = 'http://192.168.0.113:8080/shop/'+ id + '/products'
+
+  useFocusEffect(
+    useCallback(()=>{
+      async function getProduct(){
+        try{
+          const response = await axios.get(url)
+          setProduct(response.data.products)
+        }catch(err){
+          console.log(err);
+        }
+      }
+      getProduct()
+    },[])
+  )
+
+  
   return (
     <View style={styles.cont_products}>
       <View style={styles.cat_sort}>
@@ -16,15 +36,19 @@ export default function ProductsSections() {
           <Image  source={require('../../../images/flechaSort.png')} resizeMode='cover'/>
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.allproducts}>
-        {/* //enviar props con imagen,nombre y precio del producto */}
-        <CardProduct press={onPressFunction}/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-        <CardProduct/>
-      </ScrollView>
+      <FlatList style={styles.allproducts}
+        data={product}
+        keyExtractor={item => item._id}
+        renderItem={({ item }) => (
+          <CardProduct
+            id={item._id}
+            img={item.photo}
+            name={item.name}
+            price={item.price}
+          />
+        )}
+      />
+
     </View>
   )
 }
@@ -37,7 +61,7 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     cat_sort:{
-      flex:0.15,
+      flex:0.2,
       width:'90%',
       borderBottomColor:'rgba(0, 0, 0, 0.3)',
       borderBottomWidth:1,
@@ -46,6 +70,10 @@ const styles = StyleSheet.create({
       justifyContent:'center',
       alignItems:'center',
       gap:40,
+    },
+    allproducts:{
+      flex:0.8,
+      width:'100%',
     },
     btn_sort:{
       width:50,
@@ -59,8 +87,5 @@ const styles = StyleSheet.create({
       fontWeight:500,
       color: '#566270'
     },
-    allproducts:{
-      flex:0.85,
-      width:'100%',
-    }
+    
 })

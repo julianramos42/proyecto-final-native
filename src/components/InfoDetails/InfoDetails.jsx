@@ -1,14 +1,17 @@
 import React from 'react'
 import { View,Text,StyleSheet,Image } from 'react-native'
 
-export default function InfoDetails() {
+export default function InfoDetails(props) {
+
+    
+
   return (
     <View style={styles.contain}>
-        <Image style={styles.img_product} source={require('../../../images/product.png')} resizeMode='cover'/>
+        <Image style={styles.img_product} source={{uri:props.photo}} resizeMode='cover'/>
         <View style={styles.cont_info}>
-            <Text style={styles.category}>CATEGORY</Text>
-            <Text style={styles.name}>Ficus Lyrata</Text>
-            <Text style={styles.price}>$70</Text>
+            <Text style={styles.category}>{props.category}</Text>
+            <Text style={styles.name}>{props.name}</Text>
+            <Text style={styles.price}>${props.price}</Text>
         </View>
     </View>
   )
