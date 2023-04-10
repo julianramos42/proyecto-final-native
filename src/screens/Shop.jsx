@@ -5,7 +5,7 @@ import ProductsSections from '../components/ProductsSection/ProductsSections';
 
 
 const altura = Dimensions.get('window').height;
-export default function Stores() {
+export default function Shop() {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, height: altura, width: '100%' }}

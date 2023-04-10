@@ -4,14 +4,16 @@ import InfoDetails from '../components/InfoDetails/InfoDetails';
 import ReturnDetails from '../components/ReturnDetails/ReturnDetails';
 import Description from '../components/Description/Description';
 import axios from 'axios'
-import { useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect,useRoute } from '@react-navigation/native'
 
 export default function DetailsProduct() {
 
     const [detail,setDetail] = useState({})
     const [count,setCount] = useState(1)
 
-    const id = '642d8fd0f85ac25682438750'
+    const route = useRoute();
+    const { id,productId } = route.params;
+
     let url = 'http://192.168.0.113:8080/product/' + id
 
     useFocusEffect(
@@ -27,7 +29,7 @@ export default function DetailsProduct() {
                 }
             }
             getDetail()
-        },[])
+        },[id])
     )
 
     const handleRest = () => {
@@ -54,7 +56,7 @@ export default function DetailsProduct() {
   return (
     <ScrollView style={styles.contain_details}> 
             <View style={styles.cont_img}>
-                <ReturnDetails/>
+                <ReturnDetails id={productId}/>
                 <InfoDetails photo={detail?.photo} category={detail?.category} name={detail?.name} price={detail?.price}/>
             </View>
             <View style={styles.cont_description}>

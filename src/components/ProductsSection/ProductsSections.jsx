@@ -4,13 +4,17 @@ import Dropdowns from '../Dropdowns/Dropdowns'
 import CardProduct from '../CardProduct/CardProduct'
 import axios from 'axios'
 import { useFocusEffect } from '@react-navigation/native'
+import { useDispatch,useSelector } from 'react-redux'
 
 export default function ProductsSections() {
   
   const [product,setProduct] = useState({})
+  const [sort, setSort] = useState(1);
+  const defaultCategory = useSelector((state) => state.categories.categories);
+  const defaultText = useSelector((state) => state.text.text);
 
   const id = '642c487e7b721ca6a2bf0a47' //id que llega por params
-    let url = 'http://192.168.0.113:8080/shop/'+ id + '/products'
+    let url = 'http://192.168.0.113:8080/shop/'+ id + '/products'+`?name=${defaultText}&category=${defaultCategory}&sort=${sort}`
 
   useFocusEffect(
     useCallback(()=>{
@@ -23,15 +27,14 @@ export default function ProductsSections() {
         }
       }
       getProduct()
-    },[])
+    },[defaultCategory,defaultText,sort])
   )
-
   
   return (
     <View style={styles.cont_products}>
       <View style={styles.cat_sort}>
         <Dropdowns/>
-        <TouchableOpacity style={styles.btn_sort}>
+        <TouchableOpacity style={styles.btn_sort} onPress={() => setSort(sort === 1 ? -1 : 1)}>
           <Text style={styles.text_sort}>Sort</Text>
           <Image  source={require('../../../images/flechaSort.png')} resizeMode='cover'/>
         </TouchableOpacity>
@@ -41,6 +44,7 @@ export default function ProductsSections() {
         keyExtractor={item => item._id}
         renderItem={({ item }) => (
           <CardProduct
+            storeId={item.store_id}
             id={item._id}
             img={item.photo}
             name={item.name}

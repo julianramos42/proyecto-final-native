@@ -1,11 +1,15 @@
 import React from 'react'
 import { View,Text,StyleSheet,TouchableOpacity,Image,Pressable } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
 export default function CardProduct(props) {
 
+  const navigation = useNavigation()
+
   const onPressFunction = () =>{
-    console.log(props.id);//debo enviar este id a details por el navigation
+    navigation.navigate('Details',{id:props.id,productId:props.storeId})
   }
+
   return (
     <View style={styles.contain}> 
         <Pressable onPress={onPressFunction}>

@@ -1,13 +1,17 @@
 import React from 'react'
 import { View,Image,TouchableOpacity,StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
-export default function ReturnDetails() {
-    const miFuncion = () => {
-        console.log('hola');
-      }
+export default function ReturnDetails(props) {
+
+    const navigation = useNavigation()
+
+    const handleReturn = () => {
+      navigation.navigate('Shop',{id:props.id})
+    }
   return (
     <View style={styles.volver}>    
-        <TouchableOpacity style={styles.btn_volver} onPress={miFuncion}>
+        <TouchableOpacity style={styles.btn_volver} onPress={handleReturn}>
           <Image source={require('../../../images/volver.png')} resizeMode='cover'/>
         </TouchableOpacity>   
     </View>
