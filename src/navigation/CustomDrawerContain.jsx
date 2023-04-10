@@ -2,13 +2,19 @@ import React,{useState,useCallback,useEffect} from 'react'
 import { View,Text,Image,FlatList,StyleSheet,TouchableOpacity } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { Icon } from '@rneui/base';
+// import { mdiHomeRoof } from '@mdi/js';
 
-export default function CustomDrawerContain({navigation,handleLogout}) {
+
+export default function CustomDrawerContain({navigation,handleLogout,reload}) {
     const commonImage = '../../images/profile.png'
 
+    
     const [selectedId, setSelectedId] = useState(null);
     const [token, setToken] = useState(null);
     const [user, setUser] = useState({ name: '', photo: '' });
+
+    // console.log(updateLoading);    
 
     async function getTokenAndUser () {
         try{
@@ -25,7 +31,6 @@ export default function CustomDrawerContain({navigation,handleLogout}) {
                   // seller: ''
               }));
             }
-        
             setToken(storedToken);
             setUser(JSON.parse(storedUser || '{}'));
 
@@ -35,11 +40,10 @@ export default function CustomDrawerContain({navigation,handleLogout}) {
         
     };
 
-    useFocusEffect(
-        useCallback(() => {
-          getTokenAndUser();
-        }, [])
-    );
+    useEffect(()=>{
+      getTokenAndUser();
+    },[reload])
+
 
 
     let listArray = [
@@ -122,6 +126,7 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 18,
+      fontWeight:600,
       marginLeft:20
     },
 });

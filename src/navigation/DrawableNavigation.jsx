@@ -6,7 +6,7 @@ import DetailsProduct from '../screens/DetailsProduct'
 import Register from '../screens/Register'
 import Login from '../screens/Login'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect,useNavigation } from "@react-navigation/native";
+import { useFocusEffect,useNavigation} from "@react-navigation/native";
 import { useState } from 'react'
 import Shop from '../screens/Shop'
 import Cart from '../screens/Cart'
@@ -14,12 +14,14 @@ import CustomDrawerContain from './CustomDrawerContain'
 import Logout from '../screens/Logout'
 import axios from 'axios';
 
+
 const Draw = createDrawerNavigator()
 
 function DrawableNavigation() {
-  const [loading, setLoading] = useState(false);
+  const [load, setLoad] = useState(false);
   let [token, setToken] = useState('')
   const navigate = useNavigation();
+
 
   useFocusEffect(
     useCallback(() => {
@@ -32,7 +34,7 @@ function DrawableNavigation() {
   );
 
   const handleLogout = async () => {
-    setLoading(true)
+    setLoad(true)
     let url = 'http://192.168.0.113:8080/auth/signout'
     let headers = { headers: { 'Authorization': `Bearer ${token}` } };
 
@@ -49,14 +51,14 @@ function DrawableNavigation() {
 
       ToastAndroid.show('The session was closed successfully! !', ToastAndroid.LONG);
       setTimeout(()=>{
-        setLoading(false)
+        setLoad(false)
         navigate.reset({
           index: 0,
           routes: [{ name: 'Home' }],
         });
       },2000)
     } catch (err) {
-      setLoading(false)
+      setLoad(false)
       console.log(err);
       // ToastAndroid.show("You're already signed out or not signed in", ToastAndroid.LONG);
     }
@@ -66,7 +68,7 @@ function DrawableNavigation() {
   return (
     <Draw.Navigator 
     screenOptions={{ headerTransparent: true }}
-    drawerContent={(props) => <CustomDrawerContain {...props} navigation={props.navigation} handleLogout={handleLogout}/>}
+    drawerContent={(props) => <CustomDrawerContain {...props} navigation={props.navigation} handleLogout={handleLogout} reload={load}/>}
     initialRouteName='Home'
     >
       <Draw.Screen name='Home' component={Index} />

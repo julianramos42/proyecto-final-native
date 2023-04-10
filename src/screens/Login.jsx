@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { View, Text, ScrollView, Image, StyleSheet, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import LoginFieldsets from '../components/LoginFieldsets'
