@@ -8,12 +8,18 @@ import { ToastAndroid } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux'
+import statusAction from '../store/StatusDrawer/actions'
+
+const {captureStatus} = statusAction
+
 
 function Login() {
+
     let [data, setData] = useState('')
     const [loading, setLoading] = useState(false);
-
     const navigation = useNavigation()
+    const dispatch = useDispatch()
 
     async function handleSignIn() {
         setLoading(true)
@@ -54,6 +60,11 @@ function Login() {
             }
         }
     }
+
+    useEffect(()=>{
+        dispatch(captureStatus({inputStatus:loading}))
+    },[loading])
+
 
     function handleRegisterNavigate(){
         setLoading(true)

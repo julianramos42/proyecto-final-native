@@ -1,20 +1,17 @@
 import React,{useState,useCallback,useEffect} from 'react'
 import { View,Text,Image,FlatList,StyleSheet,TouchableOpacity } from 'react-native'
-import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { Icon } from '@rneui/base';
-// import { mdiHomeRoof } from '@mdi/js';
+import { Icon } from '@rneui/base';
+import { useSelector } from 'react-redux';
 
 
 export default function CustomDrawerContain({navigation,handleLogout,reload}) {
-    const commonImage = '../../images/profile.png'
 
-    
     const [selectedId, setSelectedId] = useState(null);
     const [token, setToken] = useState(null);
     const [user, setUser] = useState({ name: '', photo: '' });
+    const loading = useSelector(store=>store.status.status)
 
-    // console.log(updateLoading);    
 
     async function getTokenAndUser () {
         try{
@@ -42,19 +39,19 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
 
     useEffect(()=>{
       getTokenAndUser();
-    },[reload])
+    },[reload,loading])
 
 
 
     let listArray = [
-        {icon: commonImage  , title:'Home',route:'Home'},
-        {icon: commonImage  , title:'Shop',route:'Shop'},
-        {icon: commonImage , title:'Register',route:'Register'},
-        {icon: commonImage , title:'Login',route:'Login'},
-    ]
+      { icon: 'home', title: 'Home', route: 'Home' },
+      { icon: 'shopping-cart', title: 'Shop', route: 'Shop' },
+      { icon: 'person-add', title: 'Register', route: 'Register' },
+      { icon: 'login', title: 'Login', route: 'Login' },
+    ];
     let bottomList = [
-        {icon: commonImage  , title:'Help',route:'Help'},
-        {icon: commonImage , title:'Logout',route:'Logout'},
+        {icon: 'live-help'  , title:'Help',route:'Help'},
+        {icon: 'logout' , title:'Logout',route:'Logout'},
     ]
 
     if (token) {
@@ -67,7 +64,7 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
 
     const Item = ({title,icon,onPress,backgroundColor,color}) => (
         <TouchableOpacity onPress={onPress} style={[styles.item,{backgroundColor: backgroundColor}]}>
-             <Image source={require('../../images/Diseño.jpg')} style={{height:35,width:35,borderRadius:50,marginLeft:10}}/>
+          <Icon name={icon} type="material" size={30} color={color} />
           <Text style={[styles.title,{color:color}]}>{title}</Text>
         </TouchableOpacity>
     );
@@ -93,20 +90,27 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
        )
     }
 
+    let follow = Math.floor(Math.random() * 10001);
+
   return (
     <View style={{flex:1}}>
-        <View style={{flex:0.25,paddingTop:50,paddingHorizontal:20,borderBottomColor:'rgba(0, 0, 0, 0.25)',borderBottomWidth:1}}>
-            <Image source={require('../../images/Diseño.jpg')} style={{height:100,width:100,borderRadius:50}}/>
-            <Text style={{fontWeight:'bold',fontSize:22,marginTop:20}}>Johan Zuluaga</Text>
-            <Text style={{fontSize:16,marginTop:5}}>{`6000 followers`}</Text>
+        <View style={{flex:0.3,paddingTop:50,borderBottomColor:'rgba(0, 0, 0, 0.25)',borderBottomWidth:1,gap:10}}>
+            <Image source={user?.photo?{uri:user?.photo}:require('../../images/userPhoto.jpg')} style={{height:100,width:100,borderRadius:50,marginHorizontal:20}}/>
+            <View style={{backgroundColor:'#495464',justifyContent:'center',paddingVertical:10,paddingLeft:20}}>
+              <Text style={{fontWeight:'bold',fontSize:22,color:'white'}}>{user?.name?user?.name:'User Name'}</Text>
+              <View style={{marginTop:5,marginLeft:10,flexDirection:'row',alignItems:'center',gap:2}}>
+                <Text style={{fontSize:16,color:'white'}}>{user?.name?`${follow} followers`:`0 followers`}</Text>
+                <Icon name='supervised-user-circle' type='material' size={20} color='white' />
+              </View>
+            </View>
         </View>
-        <View style={{flex:0.5}}>
+        <View style={{flex:0.6,paddingTop:20}}>
             <FlatList
               data={listArray}
               renderItem={renderItem}
             />
         </View>
-        <View style={{flex:0.25,borderTopColor:'rgba(0, 0, 0, 0.25)',borderTopWidth:1}}>
+        <View style={{flex:0.2,borderTopColor:'rgba(0, 0, 0, 0.25)',borderTopWidth:1}}>
             <FlatList
               data={bottomList}
               renderItem={renderItem}
@@ -118,6 +122,7 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
 const styles = StyleSheet.create({
     item: {
       paddingVertical:10,
+      paddingLeft:10,
       marginVertical: 8,
       marginHorizontal: 16,
       flexDirection:'row',
