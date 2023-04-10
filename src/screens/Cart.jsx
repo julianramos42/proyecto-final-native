@@ -1,13 +1,26 @@
 import React from 'react'
-import { View, Text,StyleSheet,Dimensions,ScrollView,TouchableOpacity } from 'react-native'
+import { View, Text,StyleSheet,Dimensions,ScrollView,TouchableOpacity,Image } from 'react-native'
 import CardCart from '../components/CardCart/CardCart';
+import { useNavigation,useRoute } from '@react-navigation/native';
 
 export default function Cart() {
+    const navigation = useNavigation()
+
+    const route = useRoute()
+    const {id} = route.params
+
+    const handleReturn = () => {
+      navigation.navigate('Shop',{id:id})
+    }
+
   return (
     <View style={styles.contain}>
         <View style={styles.header_cart}>
             <View style={styles.text_header}>
                 <Text style={{fontSize:20,fontWeight:500,color:'#566270'}}>Cart (0)</Text>
+                <TouchableOpacity  style={{width:30,height:30 ,justifyContent:'center',alignItems:'center'}} onPress={handleReturn}>
+                    <Image source={require('../../images/volver.png')} resizeMode='cover'/>
+                </TouchableOpacity>
             </View>
         </View>
         <View style={styles.products_cart}>
@@ -38,7 +51,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#F0F2F5'
     },
     header_cart:{
-        flex:0.08,
+        flex:0.1,
         display:'flex',
         alignItems:'center',
     },
@@ -48,9 +61,10 @@ const styles = StyleSheet.create({
         borderBottomColor:'#999999',
         borderBottomWidth:1,
         display:'flex',
+        flexDirection:'row',
         alignItems:'flex-end',
-        justifyContent:'flex-end',
-        paddingBottom:10,
+        justifyContent:'space-between',
+        paddingBottom:4
     },
     products_cart:{
         flex:0.72,

@@ -7,7 +7,9 @@ export default function CardProduct(props) {
   const navigation = useNavigation()
 
   const onPressFunction = () =>{
-    navigation.navigate('Details',{id:props.id,productId:props.storeId})
+    setTimeout(()=>{
+      navigation.navigate('Details',{id:props.id,productId:props.storeId})
+    },1000)
   }
 
   return (

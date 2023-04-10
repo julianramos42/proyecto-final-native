@@ -1,4 +1,4 @@
-import React,{useState,useCallback} from 'react'
+import React,{useState,useCallback,useEffect} from 'react'
 import { View,Text,StyleSheet,ScrollView,Image,TouchableOpacity } from 'react-native'
 import InfoDetails from '../components/InfoDetails/InfoDetails';
 import ReturnDetails from '../components/ReturnDetails/ReturnDetails';
@@ -9,7 +9,8 @@ import { useFocusEffect,useRoute } from '@react-navigation/native'
 export default function DetailsProduct() {
 
     const [detail,setDetail] = useState({})
-    const [count,setCount] = useState(1)
+    const [shop,setShop] = useState({})
+    const [count,setCount] = useState(0)
 
     const route = useRoute();
     const { id,productId } = route.params;
@@ -31,6 +32,27 @@ export default function DetailsProduct() {
             getDetail()
         },[id])
     )
+
+    let ShopId = detail?.store_id 
+    let urlShop = 'http://192.168.0.113:8080/shop/'+ ShopId
+
+    async function getShop(){
+        if (ShopId) { 
+            setTimeout(async () => { 
+                try{
+                    const response = await axios.get(urlShop)
+                    setShop(response.data.shop)
+                }catch(err){
+                    console.log(err);
+                }
+            }, 500);
+        }
+    }
+    
+    useEffect(() => {
+        getShop();
+    }, [ShopId]); 
+
 
     const handleRest = () => {
         if (count === 0){
@@ -83,7 +105,7 @@ export default function DetailsProduct() {
                 </View>
                 <View style={styles.footer}>
                     <View style={styles.logo_foot}>
-                        <Image source={require('../../images/logo_stores.png')}/>
+                        <Image style={{width:113,height:74,borderRadius:50}} source={{uri:shop?.photo}} resizeMode='cover'/>
                     </View>
                     <Text style={styles.text_foot}>© 2023 Mindhub</Text>
                 </View>

@@ -3,8 +3,9 @@ import { Text, View,StyleSheet,ScrollView,TouchableOpacity,Image,FlatList } from
 import Dropdowns from '../Dropdowns/Dropdowns'
 import CardProduct from '../CardProduct/CardProduct'
 import axios from 'axios'
-import { useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect,useRoute } from '@react-navigation/native'
 import { useDispatch,useSelector } from 'react-redux'
+import NoCard from '../NoCard/NoCard'
 
 export default function ProductsSections() {
   
@@ -13,8 +14,10 @@ export default function ProductsSections() {
   const defaultCategory = useSelector((state) => state.categories.categories);
   const defaultText = useSelector((state) => state.text.text);
 
-  const id = '642c487e7b721ca6a2bf0a47' //id que llega por params
-    let url = 'http://192.168.0.113:8080/shop/'+ id + '/products'+`?name=${defaultText}&category=${defaultCategory}&sort=${sort}`
+  // const route = useRoute();
+  // const { id } = route.params;
+  const id = '642c487e7b721ca6a2bf0a47' //id que llega por params el ide de facu y el de la navegacion de returdetails
+  let url = 'http://192.168.0.113:8080/shop/'+ id + '/products'+`?name=${defaultText}&category=${defaultCategory}&sort=${sort}`
 
   useFocusEffect(
     useCallback(()=>{
@@ -51,6 +54,7 @@ export default function ProductsSections() {
             price={item.price}
           />
         )}
+        ListEmptyComponent={<NoCard text={defaultText} cat={defaultCategory}/>}
       />
 
     </View>

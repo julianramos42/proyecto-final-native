@@ -1,8 +1,11 @@
 import React,{useState} from 'react'
 import { Text, View,StyleSheet,TouchableOpacity,ImageBackground } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
-export default function ShopRoutes() {
+export default function ShopRoutes(props) {
     const [pressedButtonIndex, setPressedButtonIndex] = useState(1);
+
+    const navigation = useNavigation()
 
     const handlePress = (index) => {
       setPressedButtonIndex(index);
@@ -17,7 +20,7 @@ export default function ShopRoutes() {
         console.log('ir a blog con un useNavigation(blog,{id:idstore}) y enviar por params el id de la tienda ');
     }
     const handleCart = () =>{
-        console.log('aca se va al cart');
+        navigation.navigate('Cart',{id:props.id})
     }
   return (
     <View style={styles.cont_route}>

@@ -1,7 +1,26 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { View,Text,StyleSheet,Image,TouchableOpacity } from 'react-native'
 
 export default function CardCart() {
+
+    const [count,setCount] = useState(0)
+
+    const handleRest = () => {
+        if (count === 0){
+            console.log('no se puede sacar mas');//mensaje a mostrar en toast
+        }else{
+            setCount(count - 1)
+        }
+        
+    }
+
+    const handleSum = () => {
+        if(count === 10){//poner la cantidad del stok que hay en maxstock del back
+            console.log('no hay mas stock');//mensaje de toast
+        }else{
+            setCount(count + 1)
+        }
+    }
   return (
     <View style={styles.contain}>
         <View style={styles.cont_img}>
@@ -16,14 +35,14 @@ export default function CardCart() {
         </View>
         <View style={styles.cont_count}>
             <View style={styles.count}>
-                <TouchableOpacity style={styles.btn_count}>
+                <TouchableOpacity style={styles.btn_count} onPress={handleRest}>
                     <Text style={{fontSize:16,fontWeight:400}}>-</Text>
                 </TouchableOpacity>
                 <View style={styles.number}>
-                    <Text style={{fontSize:16,fontWeight:400}}>1</Text>
+                    <Text style={{fontSize:16,fontWeight:400}}>{count}</Text>
                 </View>
                 <TouchableOpacity style={styles.btn_count}>
-                    <Text style={{fontSize:16,fontWeight:400}}>+</Text>
+                    <Text style={{fontSize:16,fontWeight:400}} onPress={handleSum}>+</Text>
                 </TouchableOpacity>
             </View>
         </View>
