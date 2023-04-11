@@ -36,7 +36,7 @@ export default function Cart() {
                 <Text style={{fontSize:20,fontWeight:600,color:'white'}}>BUY CART</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn2} >
-                <Text style={{fontSize:20,fontWeight:600,color:'#5BB35F'}}>DELETE CART</Text>
+                <Text style={{fontSize:20,fontWeight:600,color:'#5BB35F'}}>CLEAR CART</Text>
             </TouchableOpacity>
         </View>
     </View>
