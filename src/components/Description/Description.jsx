@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
         flex:0.9,
         width:'100%',
         display:'flex',
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'space-evenly'
     },
     title:{
         flex:0.2,
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
         borderBottomWidth:2,
     },
     text_description:{
-        flex:0.8,
+        flex:0.4,
         width:382,
     },
     text:{
