@@ -1,24 +1,36 @@
 import React,{useState} from 'react'
-import { View,Text,StyleSheet } from 'react-native'
+import { View,Text,StyleSheet,TouchableOpacity } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
+import categoriesAction from '../../store/Categories/actions'
+import { useDispatch,useSelector } from 'react-redux'
+
+const {captureCategories} = categoriesAction
 
 export default function Dropdowns() {
 
+
+  const dispatch = useDispatch();
+  
     const data = [
-        { label: 'Item 1', value: '1' },
-        { label: 'Item 2', value: '2' },
-        { label: 'Item 3', value: '3' },
-        { label: 'Item 4', value: '4' },
-        { label: 'Item 5', value: '5' },
-        { label: 'Item 6', value: '6' },
-        { label: 'Item 7', value: '7' },
-        { label: 'Item 8', value: '8' },
+        { label: 'Computacion', value: 'Computacion' },
+        { label: 'Computacion2', value: 'Computacion2' },
     ];
 
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
 
-    
+
+    const handleReset = () => {
+      setValue(null);
+      dispatch(captureCategories({ inputCategory: [] })); 
+    }
+
+    const handleChange = item => {
+      setValue(item.value);
+      setIsFocus(false);
+      dispatch(captureCategories({inputCategory: item.value})); // dispatch value
+    };
+
 
   return (
     <View style={styles.container}>
@@ -38,11 +50,11 @@ export default function Dropdowns() {
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
-          }}
+          onChange={handleChange}
         />
+        <TouchableOpacity onPress={handleReset}>
+              <Text style={styles.resetButton}>Reset</Text>
+            </TouchableOpacity>
       </View>
   )
 }
@@ -50,6 +62,8 @@ export default function Dropdowns() {
 const styles = StyleSheet.create({
     container: {
       padding: 16,
+      flexDirection:'row-reverse',
+      gap:10,
       justifyContent:'center',
       alignContent:'center'
     },
@@ -89,4 +103,7 @@ const styles = StyleSheet.create({
       height: 40,
       fontSize: 15,
     },
+    resetButton: {
+      marginTop: 10,
+    }
   });

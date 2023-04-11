@@ -1,16 +1,41 @@
-import React,{useState} from 'react'
+import React,{useState,useCallback} from 'react'
+import { useFocusEffect,useRoute } from '@react-navigation/native'
 import { Text, View,StyleSheet,ImageBackground,Image,TouchableOpacity } from 'react-native'
 import ShopRoutes from '../ShopRoutes/ShopRoutes'
 import SearchStore from '../SearchStore/SearchStore'
+import axios from 'axios'
+
 
 export default function SearchSection() {
+
+    const [shop,setShop] = useState({})
+
+    // const route = useRoute();
+    // const { id } = route.params;
+    const id = '642c487e7b721ca6a2bf0a47' // id que llega por params tando de lo de facu como de la navegacion del returnDetails
+    let url = 'http://192.168.0.113:8080/shop/'+id
+
+    useFocusEffect(
+        useCallback(()=>{
+            async function getShop(){
+                try{
+                    const response = await axios.get(url)
+                    setShop(response.data.shop)
+                }catch(err){
+                    console.log(err);
+                }
+            }
+            getShop()
+        },[])
+    )
+    
   return (
     <View style={styles.cont_search}>
-        <ImageBackground style={styles.img_Search} source={require('../../../images/img_stores.png')} >
+        <ImageBackground style={styles.img_Search} source={{uri:shop?.banner}} resizeMode='cover'>
             <View style={styles.cont_Logo} >
-                <Image source={require('../../../images/logo_stores.png')}/>
+                <Image style={{width:113,height:74,borderRadius:50}} source={{uri:shop?.photo}} resizeMode='cover'/>
             </View>
-            <ShopRoutes/>
+            <ShopRoutes id={shop?._id}/>
             <View style={styles.search}>
                 <SearchStore/>           
             </View>
