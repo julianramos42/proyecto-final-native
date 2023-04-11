@@ -91,6 +91,45 @@ export default function Cart() {
         }
     }
 
+    const deleteOne = async (productId) => {
+        try{
+            let url = `http://192.168.0.113:8080/shop/cart/deleteone/${productId}`
+            const response = await axios.delete(url,headers)
+            console.log(response.data.message);
+            setReload(!reload)
+        }catch(error){
+            if (error.code === "ERR_NETWORK") {
+                console.log('Network Error')
+            } else {
+                if (typeof error.response.data.message === 'string') {
+                    console.log(error.response.data.message)
+                } else {
+                    error.response.data.message.forEach(err => console.log(err))
+                }
+            }
+        }
+    }
+
+    const deleteAll = async () =>{
+        try{
+
+            let url = `http://192.168.0.113:8080/shop/${id}/cart/deleteall`
+            const response = await axios.delete(url,headers)
+            console.log(response.data.message);
+            setReload(!reload)
+        }catch(error){
+            if (error.code === "ERR_NETWORK") {
+                console.log('Network Error')
+            } else {
+                if (typeof error.response.data.message === 'string') {
+                    console.log(error.response.data.message)
+                } else {
+                    error.response.data.message.forEach(err => console.log(err))
+                }
+            }
+        }
+    }
+
     function handleMaxStock(){
         try{
             products.forEach( product => {
@@ -137,6 +176,7 @@ export default function Cart() {
                       stock={item.stock}
                       LessStock={handleLessStock}
                       MoreStock={handleMoreStock}
+                      delet={deleteOne}
                     />
                   )}
                   ListEmptyComponent={<NoCardCat/>}
@@ -148,7 +188,7 @@ export default function Cart() {
                 <Text style={{fontSize:20,fontWeight:600,color:'white'}}>BUY CART</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn2} >
-                <Text style={{fontSize:20,fontWeight:600,color:'#5BB35F'}}>CLEAR CART</Text>
+                <Text style={{fontSize:20,fontWeight:600,color:'#5BB35F'}} onPress={deleteAll}>CLEAR CART</Text>
             </TouchableOpacity>
         </View>
     </View>

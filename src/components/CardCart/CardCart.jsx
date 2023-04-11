@@ -6,7 +6,7 @@ export default function CardCart(props) {
     <View style={styles.contain}>
         <View style={styles.cont_img}>
             <Image style={{height:'100%',width:272,borderRadius:8}} source={{uri:props.img}} resizeMode='cover'/>
-            <TouchableOpacity style={{width:30,height:30}}>
+            <TouchableOpacity style={{width:30,height:30}} onPress={() => props.delet(props.id)}>
                 <Image style={{width:50,height:50}} source={require('../../../images/next.png')} resizeMode='cover'/>
             </TouchableOpacity>
         </View>
