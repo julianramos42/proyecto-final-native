@@ -1,48 +1,29 @@
 import React,{useState} from 'react'
 import { View,Text,StyleSheet,Image,TouchableOpacity } from 'react-native'
 
-export default function CardCart() {
-
-    const [count,setCount] = useState(0)
-
-    const handleRest = () => {
-        if (count === 0){
-            console.log('no se puede sacar mas');//mensaje a mostrar en toast
-        }else{
-            setCount(count - 1)
-        }
-        
-    }
-
-    const handleSum = () => {
-        if(count === 10){//poner la cantidad del stok que hay en maxstock del back
-            console.log('no hay mas stock');//mensaje de toast
-        }else{
-            setCount(count + 1)
-        }
-    }
+export default function CardCart(props) {
   return (
     <View style={styles.contain}>
         <View style={styles.cont_img}>
-            <Image style={{height:'100%',width:272,borderRadius:8}} source={require('../../../images/product.png')} resizeMode='cover'/>
+            <Image style={{height:'100%',width:272,borderRadius:8}} source={{uri:props.img}} resizeMode='cover'/>
             <TouchableOpacity style={{width:30,height:30}}>
                 <Image style={{width:50,height:50}} source={require('../../../images/next.png')} resizeMode='cover'/>
             </TouchableOpacity>
         </View>
         <View style={styles.cont_name}>
-            <Text style={{fontSize:20,fontWeight:500,color:'#566270'}}>Monstera Deliciosa</Text>
-            <Text style={{fontSize:18,fontWeight:500}}>$89</Text>
+            <Text style={{fontSize:20,fontWeight:500,color:'#566270'}}>{props.name}</Text>
+            <Text style={{fontSize:18,fontWeight:500}}>${props.price}</Text>
         </View>
         <View style={styles.cont_count}>
             <View style={styles.count}>
-                <TouchableOpacity style={styles.btn_count} onPress={handleRest}>
+                <TouchableOpacity style={styles.btn_count} onPress={() => props.LessStock(props.id)}>
                     <Text style={{fontSize:16,fontWeight:400}}>-</Text>
                 </TouchableOpacity>
                 <View style={styles.number}>
-                    <Text style={{fontSize:16,fontWeight:400}}>{count}</Text>
+                    <Text style={{fontSize:16,fontWeight:400}}>{props.stock}</Text>
                 </View>
-                <TouchableOpacity style={styles.btn_count}>
-                    <Text style={{fontSize:16,fontWeight:400}} onPress={handleSum}>+</Text>
+                <TouchableOpacity style={styles.btn_count} onPress={() => props.MoreStock(props.id)}>
+                    <Text style={{fontSize:16,fontWeight:400}} >+</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -53,9 +34,7 @@ export default function CardCart() {
                 </View>
             </View>
             <View style={styles.description}>
-            <Text style={styles.text}>your own terrarium, and then walk you through the process step-by-step to create your miniature environment with unique plants to take home.
-                    We’re excited to welcome you into our brand new workshop space located at 5-2501 Alyth Road SE, where you’ll enjoy a 1.5 – 2 hour interactive class. Please see the 
-                    map for location details as all workshops are held at Plant Plant (our sister shop) just minutes away from our mainstreet Inglewood location.</Text>
+            <Text style={styles.text}>{props.des}</Text>
             </View>
         </View>
     </View>
