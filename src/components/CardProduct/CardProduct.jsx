@@ -1,16 +1,28 @@
 import React from 'react'
-import { View,Text,StyleSheet,TouchableOpacity,Image } from 'react-native'
+import { View,Text,StyleSheet,TouchableOpacity,Image,Pressable } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
-export default function CardProduct() {
+export default function CardProduct(props) {
+
+  const navigation = useNavigation()
+
+  const onPressFunction = () =>{
+    setTimeout(()=>{
+      navigation.navigate('Details',{id:props.id,productId:props.storeId})
+    },1000)
+  }
+
   return (
     <View style={styles.contain}> 
-            <View style={styles.contain_Card}>
-                <TouchableOpacity>
-                <Image style={styles.img_product} source={require('../../../images/product.png')} resizeMode='cover'/>
-                </TouchableOpacity>
-                <Text style={styles.name_product}>Monstera Deliciosa</Text>
-                <Text style={styles.price}>$89</Text>
+        <Pressable onPress={onPressFunction}>
+          {({ pressed }) => (
+            <View style={[styles.contain_Card, pressed && styles.pressed]}>
+              <Image style={styles.img_product} source={{uri:props.img}} resizeMode='cover'/>
+              <Text style={styles.name_product}>{props.name}</Text>
+              <Text style={styles.price}>${props.price}</Text>
             </View>
+          )}
+        </Pressable>        
     </View>
   )
 }
@@ -42,5 +54,8 @@ const styles = StyleSheet.create({
         color:'#081323',
         fontSize:24,
         fontWeight:500
-    }
+    },
+    pressed: {
+    opacity: 0.5,
+    },
 })

@@ -16,7 +16,7 @@ function Register() {
 
     async function handleSignUp() {
         setLoading(true)
-        let url = 'http://192.168.0.10:8080/auth/signup'
+        let url = 'http://192.168.0.113:8080/auth/signup'
         
         try {
             await axios.post(url, data).then(res => {

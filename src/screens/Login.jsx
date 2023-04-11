@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { View, Text, ScrollView, Image, StyleSheet, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import LoginFieldsets from '../components/LoginFieldsets'
@@ -8,16 +8,22 @@ import { ToastAndroid } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux'
+import statusAction from '../store/StatusDrawer/actions'
+
+const {captureStatus} = statusAction
+
 
 function Login() {
+
     let [data, setData] = useState('')
     const [loading, setLoading] = useState(false);
-
     const navigation = useNavigation()
+    const dispatch = useDispatch()
 
     async function handleSignIn() {
         setLoading(true)
-        let url = 'http://192.168.0.10:8080/auth/signin'
+        let url = 'http://192.168.0.113:8080/auth/signin'
         
         let admin
         let seller
@@ -54,6 +60,11 @@ function Login() {
             }
         }
     }
+
+    useEffect(()=>{
+        dispatch(captureStatus({inputStatus:loading}))
+    },[loading])
+
 
     function handleRegisterNavigate(){
         setLoading(true)
