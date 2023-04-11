@@ -1,5 +1,5 @@
 import React,{useCallback,useEffect,useState} from 'react'
-import { FlatList,View, Text,StyleSheet,Dimensions,ScrollView,TouchableOpacity,Image } from 'react-native'
+import { FlatList,View, Text,StyleSheet,Dimensions,TouchableOpacity,Image,ToastAndroid } from 'react-native'
 import CardCart from '../components/CardCart/CardCart';
 import { useFocusEffect, useNavigation,useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -56,7 +56,7 @@ export default function Cart() {
             if(product.stock === 1){
                 let url = `http://192.168.0.113:8080/shop/cart/deleteone/${product._id}`
                 const response = await axios.delete(url,headers)
-                console.log(response.data.message);
+                ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                 setReload(!reload)
             }else{
                 let data = {
@@ -95,16 +95,17 @@ export default function Cart() {
         try{
             let url = `http://192.168.0.113:8080/shop/cart/deleteone/${productId}`
             const response = await axios.delete(url,headers)
-            console.log(response.data.message);
+            ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
             setReload(!reload)
         }catch(error){
             if (error.code === "ERR_NETWORK") {
                 console.log('Network Error')
+                ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
             } else {
                 if (typeof error.response.data.message === 'string') {
-                    console.log(error.response.data.message)
+                    ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                 } else {
-                    error.response.data.message.forEach(err => console.log(err))
+                    error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
                 }
             }
         }
@@ -115,16 +116,17 @@ export default function Cart() {
 
             let url = `http://192.168.0.113:8080/shop/${id}/cart/deleteall`
             const response = await axios.delete(url,headers)
-            console.log(response.data.message);
+            ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
             setReload(!reload)
         }catch(error){
             if (error.code === "ERR_NETWORK") {
                 console.log('Network Error')
+                ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
             } else {
                 if (typeof error.response.data.message === 'string') {
-                    console.log(error.response.data.message)
+                    ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                 } else {
-                    error.response.data.message.forEach(err => console.log(err))
+                    error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
                 }
             }
         }
@@ -138,7 +140,7 @@ export default function Cart() {
                         stock: product.maxStock
                     }
                     let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
-                    axios.put(url, data, headers).then(res => toast.success('Some items stock has been modified because they exceed the limit'))
+                    axios.put(url, data, headers).then(res => ToastAndroid.showWithGravity('Some items stock has been modified because they exceed the limit', ToastAndroid.LONG, ToastAndroid.TOP))    
                 }
             })
         }catch(err){
