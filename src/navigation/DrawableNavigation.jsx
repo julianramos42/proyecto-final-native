@@ -13,7 +13,7 @@ import Cart from '../screens/Cart'
 import CustomDrawerContain from './CustomDrawerContain'
 import Logout from '../screens/Logout'
 import axios from 'axios';
-
+import Stores from '../screens/Stores';
 
 const Draw = createDrawerNavigator()
 
@@ -73,6 +73,7 @@ function DrawableNavigation() {
     >
       <Draw.Screen name='Home' component={Index} />
       <Draw.Screen name='Shop' component={Shop} />
+      <Draw.Screen name='Stores' component={Stores}/>
       <Draw.Screen name='Details' component={DetailsProduct}/>
       <Draw.Screen name='Cart' component={Cart}/>
       <Draw.Screen name='Register' component={Register} options={{ headerShown: false }} />
