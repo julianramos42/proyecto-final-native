@@ -156,7 +156,7 @@ export default function Cart() {
     <View style={styles.contain}>
         <View style={styles.header_cart}>
             <View style={styles.text_header}>
-                <Text style={{fontSize:20,fontWeight:500,color:'#566270'}}>Cart ({products.length})</Text>
+                <Text style={{fontSize:20,fontFamily:'Montserrat-Medium',color:'#566270'}}>Cart ({products.length})</Text>
                 <TouchableOpacity  style={{width:30,height:30 ,justifyContent:'center',alignItems:'center'}} onPress={handleReturn}>
                     <Image source={require('../../images/volver.png')} resizeMode='cover'/>
                 </TouchableOpacity>
@@ -187,10 +187,10 @@ export default function Cart() {
         </View>
         <View style={styles.btn_cart}>
             <TouchableOpacity style={styles.btn} >
-                <Text style={{fontSize:20,fontWeight:600,color:'white'}}>BUY CART</Text>
+                <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'white'}}>BUY CART</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn2} >
-                <Text style={{fontSize:20,fontWeight:600,color:'#5BB35F'}} onPress={deleteAll}>CLEAR CART</Text>
+                <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'#5BB35F'}} onPress={deleteAll}>CLEAR CART</Text>
             </TouchableOpacity>
         </View>
     </View>

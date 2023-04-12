@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   text_1:{
     fontSize:22,
-    fontWeight:500
+    fontFamily:'Montserrat-Medium'
   },
   text_2:{
     fontSize:45,

@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
       fontSize: 15,
-      fontWeight:500,
+      fontFamily:'Montserrat-Medium',
       color:'#566270'
     },
     selectedTextStyle: {
@@ -105,5 +105,6 @@ const styles = StyleSheet.create({
     },
     resetButton: {
       marginTop: 10,
+      fontFamily:'Montserrat-Medium',
     }
   });

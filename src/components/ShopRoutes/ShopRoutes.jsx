@@ -102,12 +102,12 @@ const styles = StyleSheet.create({
     text: {
         color:'white',
         fontSize:20,
-        fontWeight:300,
+        fontFamily:'Montserrat-Light',
         textDecorationLine: 'none',
     },
     pressed: {
         color:'white',
-        fontWeight:700,
+        fontFamily:'Montserrat-Bold'
     },
     img_icon:{
         width:26,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         borderRadius:50,
         fontSize:14,
-        fontWeight:700,
+        fontFamily:'Montserrat-Bold',
         color:'white',
         position: 'absolute',
         left: '46.15%',

@@ -41,5 +41,6 @@ const style = StyleSheet.create({
     input_search:{
         width:287,
         fontSize:17,
+        fontFamily:'Montserrat-Regular'
     }
 })

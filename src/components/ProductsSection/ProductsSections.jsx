@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     text_sort:{
       fontSize:15,
-      fontWeight:500,
+      fontFamily:'Montserrat-Medium',
       color: '#566270'
     },
     

@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
     },
     title:{
         fontSize:50,
-        fontWeight:700,
+        fontFamily:'Montserrat-Bold',
         color:'white'
     },
     inf_about:{
         fontSize:20,
-        fontWeight:600,
+        fontFamily:'Montserrat-SemiBold',
         color:'white',
         width:330
     },

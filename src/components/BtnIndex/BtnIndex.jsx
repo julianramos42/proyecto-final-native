@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
     },
     text_btn:{
         fontSize:24,
-        fontWeight:600
+        fontFamily:'Montserrat-SemiBold'
     }
 })

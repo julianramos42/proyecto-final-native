@@ -48,12 +48,12 @@ const styles = StyleSheet.create({
     name_product:{
         color:'#566270',
         fontSize:20,
-        fontWeight:500
+        fontFamily:'Montserrat-Medium'
     },
     price:{
         color:'#081323',
         fontSize:24,
-        fontWeight:500
+        fontFamily:'Montserrat-Medium'
     },
     pressed: {
     opacity: 0.5,

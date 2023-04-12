@@ -131,13 +131,13 @@ export default function DetailsProduct() {
                 <View style={styles.count_item}>
                     <View style={styles.count}>
                         <TouchableOpacity style={styles.btn_count} onPress={handleRest}>
-                            <Text style={{fontSize:16,fontWeight:400}}>-</Text>
+                            <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}}>-</Text>
                         </TouchableOpacity>
                         <View style={styles.number}>
-                            <Text style={{fontSize:16,fontWeight:400}}>{count}</Text>
+                            <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}}>{count}</Text>
                         </View>
                         <TouchableOpacity style={styles.btn_count}>
-                            <Text style={{fontSize:16,fontWeight:400}} onPress={handleSum}>+</Text>
+                            <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}} onPress={handleSum}>+</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -146,7 +146,7 @@ export default function DetailsProduct() {
             <View style={styles.cont_btn}>
                 <View style={styles.btn_cart}>
                     <TouchableOpacity style={styles.btn} onPress={handleCart}>
-                        <Text style={{fontSize:20,fontWeight:600,color:'white'}} onPress={handleCart}>ADD TO CART</Text>
+                        <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'white'}} onPress={handleCart}>ADD TO CART</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.footer}>
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         paddingTop:21,
         fontSize:20,
-        fontWeight:400,
+        fontFamily:'Montserrat-Regular',
         color:'white'
     }
 

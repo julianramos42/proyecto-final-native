@@ -97,9 +97,7 @@ contTitleCustomers: {
 title: {
     textAlign: "center",
     fontSize: 40,
-    width: 200,
-    fontWeight: 900,
-    fontWeight: 'bold',
+    fontFamily:'Montserrat-Bold',
     marginBottom: 30,
 },
 contNames: {
@@ -133,11 +131,12 @@ contTextos:{
 },
 name:{
     fontSize: 30,
-    fontWeight: 600,
+    fontFamily:'Montserrat-SemiBold'
 },
 comment:{
     fontSize: 18,
     textAlign: "center",
+    fontFamily:'Montserrat-Regular',
     padding: 15
 },
 estrella:{
