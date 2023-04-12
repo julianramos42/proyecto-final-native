@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   text_2:{
     fontSize:45,
-    fontWeight:700
+    fontFamily:'Montserrat-Bold'
   },
   cont_btn:{
     flex:0.5,
