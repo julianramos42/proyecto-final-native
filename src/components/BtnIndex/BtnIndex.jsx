@@ -4,7 +4,7 @@ import { Text, View,TouchableOpacity,StyleSheet } from 'react-native'
 
 export default function BtnIndex(props) {
   return (
-    <TouchableOpacity style={[styles.btn_index,{backgroundColor:props.bg}]}>
+    <TouchableOpacity style={[styles.btn_index,{backgroundColor:props.bg}]} onPress={props.Press}>
         <Text style={[styles.text_btn,{color:props.color}]}>{props.name}</Text>
     </TouchableOpacity>
   )

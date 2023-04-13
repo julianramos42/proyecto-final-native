@@ -82,7 +82,6 @@ export default function Stores() {
                   keyExtractor={item => item._id}
                   renderItem={({ item }) => (
                     <CardStores
-                    //   storeId={item.store_id}
                       id={item._id}
                       banner={item.banner}
                       photo={item.photo}
@@ -91,6 +90,11 @@ export default function Stores() {
                     />
                   )}
                   ListEmptyComponent={<NoCardStores text={defaultText} cat={defaultCategory}/>}
+                  removeClippedSubviews={true}
+                  maxToRenderPerBatch={10}
+                  updateCellsBatchingPeriod={50}
+                  initialNumToRender={6}
+                  windowSize={21}
                 />
             </View>
         </View>

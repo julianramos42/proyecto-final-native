@@ -35,13 +35,15 @@ export default function Cart() {
     }
 
     async function getProducts(){
-        try{
-            let url = `http://192.168.0.113:8080/shop/${id}/cart`
-            const response = await axios.get(url,headers)
-            setProducts(response.data.products)
-            setReload(!reload)
-        }catch(err){
-            console.log(err);
+        if(token){
+            try{
+                let url = `http://192.168.0.113:8080/shop/${id}/cart`
+                const response = await axios.get(url,headers)
+                setProducts(response.data.products)
+                setReload(!reload)
+            }catch(err){
+                console.log(err);
+            }
         }
     }
 
@@ -51,82 +53,90 @@ export default function Cart() {
     },[id,reload])
 
     const handleLessStock = async (productId) =>{
-        try{
-            let product = products.find(product => product._id === productId)
-            if(product.stock === 1){
-                let url = `http://192.168.0.113:8080/shop/cart/deleteone/${product._id}`
-                const response = await axios.delete(url,headers)
-                ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
-                setReload(!reload)
-            }else{
-                let data = {
-                    stock: product.stock -=1
+        if(token){
+            try{
+                let product = products.find(product => product._id === productId)
+                if(product.stock === 1){
+                    let url = `http://192.168.0.113:8080/shop/cart/deleteone/${product._id}`
+                    const response = await axios.delete(url,headers)
+                    ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                    setReload(!reload)
+                }else{
+                    let data = {
+                        stock: product.stock -=1
+                    }
+                    let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
+                    const response = await axios.put(url,data,headers)
+                    console.log(response.data.message);
+                    setReload(!reload)
                 }
-                let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
-                const response = await axios.put(url,data,headers)
-                console.log(response.data.message);
-                setReload(!reload)
+            }catch(err){
+                console.log(err);
             }
-        }catch(err){
-            console.log(err);
         }
     }
 
     const handleMoreStock = async (productId) =>{
-        try{
+        if(token){
+            try{
 
-            let product = products.find(product => product._id === productId)
-            if(product.stock !== product.maxStock){
-                let data = {
-                    stock: product.stock +=1
+                let product = products.find(product => product._id === productId)
+                if(product.stock !== product.maxStock){
+                    let data = {
+                        stock: product.stock +=1
+                    }
+                    let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
+                    const response = await axios.put(url,data,headers)
+                    console.log(response.data.message);
+                    setReload(!reload)
                 }
-                let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
-                const response = await axios.put(url,data,headers)
-                console.log(response.data.message);
-                setReload(!reload)
+    
+            }catch(err){
+                console.log(err);
             }
-
-        }catch(err){
-            console.log(err);
         }
     }
 
     const deleteOne = async (productId) => {
-        try{
-            let url = `http://192.168.0.113:8080/shop/cart/deleteone/${productId}`
-            const response = await axios.delete(url,headers)
-            ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
-            setReload(!reload)
-        }catch(error){
-            if (error.code === "ERR_NETWORK") {
-                console.log('Network Error')
-                ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
-            } else {
-                if (typeof error.response.data.message === 'string') {
-                    ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+        if(token){
+            try{
+                let url = `http://192.168.0.113:8080/shop/cart/deleteone/${productId}`
+                const response = await axios.delete(url,headers)
+                ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                setReload(!reload)
+            }catch(error){
+                if (error.code === "ERR_NETWORK") {
+                    console.log('Network Error')
+                    ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
                 } else {
-                    error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                    if (typeof error.response.data.message === 'string') {
+                        ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                    } else {
+                        error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                    }
                 }
             }
         }
     }
 
     const deleteAll = async () =>{
-        try{
+        if(token){
+            try{
 
-            let url = `http://192.168.0.113:8080/shop/${id}/cart/deleteall`
-            const response = await axios.delete(url,headers)
-            ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
-            setReload(!reload)
-        }catch(error){
-            if (error.code === "ERR_NETWORK") {
-                console.log('Network Error')
-                ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
-            } else {
-                if (typeof error.response.data.message === 'string') {
-                    ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                let url = `http://192.168.0.113:8080/shop/${id}/cart/deleteall`
+                const response = await axios.delete(url,headers)
+                ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                setReload(!reload)
+            }catch(error){
+                if (error.code === "ERR_NETWORK") {
+                    console.log('Network Error')
+                    ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
                 } else {
-                    error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                    if (typeof error.response.data.message === 'string') {
+                        ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                    } else {
+                        error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                    }
                 }
             }
         }
@@ -182,6 +192,11 @@ export default function Cart() {
                     />
                   )}
                   ListEmptyComponent={<NoCardCat/>}
+                  removeClippedSubviews={true}
+                  maxToRenderPerBatch={10}
+                  updateCellsBatchingPeriod={50}
+                  initialNumToRender={6}
+                  windowSize={21}
                 />
             </View>
         </View>

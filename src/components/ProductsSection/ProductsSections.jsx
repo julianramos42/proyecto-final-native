@@ -54,6 +54,11 @@ export default function ProductsSections(props) {
           />
         )}
         ListEmptyComponent={<NoCard text={defaultText} cat={defaultCategory}/>}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={10}
+        updateCellsBatchingPeriod={50}
+        initialNumToRender={6}
+        windowSize={21}
       />
 
     </View>
