@@ -3,7 +3,7 @@ import categoryFavActions from './actions'
 const {captureCategoriesFav} = categoryFavActions 
 
 const initiateState= {
-    categoriesFav: [],
+    categoriesFav: '',
 }
 
 const reducer = createReducer(

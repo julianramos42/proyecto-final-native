@@ -62,6 +62,29 @@ export default function Favorites() {
         storeIds.push(favorite.store_id);
     });
     
+    let filteredStoreIds = storeIds.filter((item) => {
+        if (!defaultText && !defaultCategory) {
+          return true;
+        }
+        
+        if (defaultText && !item.name.toLowerCase().includes(defaultText.toLowerCase())) {
+          return false;
+        }
+        
+        if (defaultCategory && !item.category.includes(defaultCategory)) {
+            return false;
+        }
+        
+        // // Permitir que los elementos sin categoría pasen el filtro si defaultCategory es undefined
+        // if (defaultCategory === undefined && item.category === undefined) {
+        //   return true;
+        // }
+      
+        return true;
+      });
+      
+      console.log(filteredStoreIds);
+
     useFocusEffect(
         useCallback(()=>{
             getFavorites()
@@ -86,7 +109,7 @@ export default function Favorites() {
             </View>
             <View style={styles.cont_cards}>
                 <FlatList 
-                  data={storeIds}
+                  data={filteredStoreIds}
                   keyExtractor={item => item._id}
                   renderItem={({ item }) => (
                     <CardFavorite
