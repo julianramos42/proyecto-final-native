@@ -56,6 +56,7 @@ export default function CardStores(props) {
     }
 
     async function getStoresFavorites(){
+        setReload(true)
         if(token){
             let url = 'http://192.168.0.113:8080/favourites/'
             try{
@@ -70,9 +71,20 @@ export default function CardStores(props) {
     useFocusEffect(
         useCallback(()=>{
             getStoresFavorites()
-        },[])
+        },[token])
     )
 
+    useFocusEffect(
+        useCallback(()=>{
+            function ReloadFavorites (){
+                const isFavorite = ShopFavorites && ShopFavorites.some(
+                  (favorites) => favorites.store_id._id === props.id
+                );
+                setIconColor(isFavorite ? 'red' : 'white');
+            }
+            ReloadFavorites()
+        },[ShopFavorites])
+    )
 
     const handleHeartPress = (FavoriteId) => {
       const isFavorite = ShopFavorites && ShopFavorites.some(
