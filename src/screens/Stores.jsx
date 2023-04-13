@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState,useEffect } from 'react'
 import { View,Text,StyleSheet,Dimensions,FlatList } from 'react-native'
 import SearchStores from '../components/SearchStores/SearchStores';
 import DropDownStores from '../components/DropDownStores/DropDownStores';
@@ -17,7 +17,6 @@ export default function Stores() {
 
     const [reload,setReload] = useState(false)
     const [shops,setShops] = useState({})
-    const [ShopFavorites,setShopFavorites] = useState([])
     
 
     const [token, setToken] = useState(null);
@@ -35,7 +34,7 @@ export default function Stores() {
     );
 
     async function getShops(){
-        let url = 'http://192.168.0.113:8080/shop/'
+        let url = `http://192.168.0.113:8080/shop?name=${defaultText}&category=${defaultCategory}`
         try{
             const response = await axios.get(url)
             setShops(response.data.shops)
@@ -44,26 +43,15 @@ export default function Stores() {
         }
     }
 
-    async function getStoresFavorites(){
-        if(token){
-            let url = 'http://192.168.0.113:8080/favourites/'
-            try{
-                const response = await axios.get(url,headers)
-                setShopFavorites(response.data.favorites)
-            }catch(err){
-                console.log(err);
-            }
-        }
-    }
+
 
     useFocusEffect(
         useCallback(()=>{
             getShops()
-            getStoresFavorites()
-        },[])
+        },[defaultText,defaultCategory])
     )
-
     
+
   return (
  
     <View style={styles.contain}>

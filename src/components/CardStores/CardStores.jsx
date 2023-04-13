@@ -1,27 +1,97 @@
-import React,{useState} from 'react'
+import React,{useCallback, useEffect, useState} from 'react'
 import { View,Text,StyleSheet,ImageBackground,TouchableOpacity,Image } from 'react-native'
 import { Icon } from '@rneui/themed'
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CardStores(props) {
 
     const navigation = useNavigation()
-    
     const [iconColor, setIconColor] = useState('white');
+    const [ShopFavorites,setShopFavorites] = useState([])
+    const [reload,setReload] = useState(false)
 
-    const handleHeart = () => {
-        setIconColor(iconColor === 'white' ? 'red' : 'white');
-      };
 
     const handleNavigation = () => {
         navigation.navigate('Shop',{id:props.id})
     }
 
+    const [token, setToken] = useState(null);
+    let headers = { headers: { 'Authorization': `Bearer ${token}` } }
+
+    useFocusEffect(
+        useCallback(() => {
+          const getTokenAndUser = async () => {
+            const storedToken = await AsyncStorage.getItem('token');
+            setToken(storedToken);
+            setReload(!reload)
+          };
+          getTokenAndUser();
+        }, [])
+    );
+
+    async function addFavorite(FavoriteId){
+        let url = `http://192.168.0.113:8080/favourites/${FavoriteId}`
+        if(token){
+            try{
+                const response = await axios.post(url,'',headers)
+                getStoresFavorites()
+            }catch(err){
+                console.log(err);
+            }
+        }
+    }
+
+    async function deleteFavorite(FavoriteId){
+        let url = `http://192.168.0.113:8080/favourites/${FavoriteId}`
+        if(token){
+            try{
+                const response = await axios.delete(url,headers)
+                getStoresFavorites()
+            }catch(err){
+                console.log(err);
+            }
+        }
+    }
+
+    async function getStoresFavorites(){
+        if(token){
+            let url = 'http://192.168.0.113:8080/favourites/'
+            try{
+                const response = await axios.get(url,headers)
+                setShopFavorites(response.data.favourites)
+            }catch(err){
+                console.log(err);
+            }
+        }
+    }
+
+    useFocusEffect(
+        useCallback(()=>{
+            getStoresFavorites()
+        },[])
+    )
+
+
+    const handleHeartPress = (FavoriteId) => {
+      const isFavorite = ShopFavorites && ShopFavorites.some(
+        (favorites) => favorites.store_id._id == FavoriteId
+      );
+      setIconColor(isFavorite ? 'white' : 'red');
+      if (isFavorite) {
+        deleteFavorite(FavoriteId);
+      } else {
+        addFavorite(FavoriteId);
+      }
+    };
+    
+
   return (
     <View style={styles.contain}>
         <View style={styles.card}>
             <ImageBackground style={styles.cont_banner} source={{uri:props.banner}} resizeMode='cover'>
-                <TouchableOpacity onPress={handleHeart}>
+                <TouchableOpacity onPress={() => { handleHeartPress(props.id) }}>
                     <Icon style={{margin:10}} name='favorite' type="material" size={30} color={iconColor}/>
                 </TouchableOpacity>
             </ImageBackground>
