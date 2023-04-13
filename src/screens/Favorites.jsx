@@ -75,15 +75,9 @@ export default function Favorites() {
             return false;
         }
         
-        // // Permitir que los elementos sin categoría pasen el filtro si defaultCategory es undefined
-        // if (defaultCategory === undefined && item.category === undefined) {
-        //   return true;
-        // }
-      
         return true;
+
       });
-      
-      console.log(filteredStoreIds);
 
     useFocusEffect(
         useCallback(()=>{
