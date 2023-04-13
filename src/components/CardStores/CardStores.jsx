@@ -1,14 +1,21 @@
 import React,{useState} from 'react'
 import { View,Text,StyleSheet,ImageBackground,TouchableOpacity,Image } from 'react-native'
 import { Icon } from '@rneui/themed'
+import { useNavigation } from '@react-navigation/native';
 
 export default function CardStores(props) {
+
+    const navigation = useNavigation()
     
     const [iconColor, setIconColor] = useState('white');
 
     const handleHeart = () => {
         setIconColor(iconColor === 'white' ? 'red' : 'white');
       };
+
+    const handleNavigation = () => {
+        navigation.navigate('Shop',{id:props.id})
+    }
 
   return (
     <View style={styles.contain}>
@@ -21,7 +28,7 @@ export default function CardStores(props) {
             <View style={styles.cont_name}>
                 <Text style={{paddingTop:45,fontSize:14,fontFamily:'Montserrat-SemiBold'}}>{props.name}</Text>
                 <Text style={{fontSize:12,fontFamily:'Montserrat-Regular'}}>{props.cat}</Text>
-                <TouchableOpacity style={{paddingVertical:4,paddingHorizontal:6,backgroundColor:'#495464',marginTop:10,borderRadius:4}}>
+                <TouchableOpacity style={{paddingVertical:4,paddingHorizontal:6,backgroundColor:'#495464',marginTop:10,borderRadius:4}} onPress={handleNavigation}>
                     <Text style={{fontSize:12,fontFamily:'Montserrat-SemiBold',color:'white'}}>Visit Store</Text>
                 </TouchableOpacity>
             </View>

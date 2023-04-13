@@ -7,16 +7,15 @@ import { useFocusEffect,useRoute } from '@react-navigation/native'
 import { useDispatch,useSelector } from 'react-redux'
 import NoCard from '../NoCard/NoCard'
 
-export default function ProductsSections() {
+export default function ProductsSections(props) {
   
   const [product,setProduct] = useState({})
   const [sort, setSort] = useState(1);
   const defaultCategory = useSelector((state) => state.categories.categories);
   const defaultText = useSelector((state) => state.text.text);
 
-  // const route = useRoute();
-  // const { id } = route.params;
-  const id = '642c487e7b721ca6a2bf0a47' //id que llega por params el ide de facu y el de la navegacion de returdetails
+ 
+  const id = props.id 
   let url = 'http://192.168.0.113:8080/shop/'+ id + '/products'+`?name=${defaultText}&category=${defaultCategory}&sort=${sort}`
 
   useFocusEffect(
@@ -30,7 +29,7 @@ export default function ProductsSections() {
         }
       }
       getProduct()
-    },[defaultCategory,defaultText,sort])
+    },[defaultCategory,defaultText,sort,id])
   )
   
   return (
