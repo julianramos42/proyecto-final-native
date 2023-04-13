@@ -15,6 +15,7 @@ import Logout from '../screens/Logout'
 import axios from 'axios';
 import Stores from '../screens/Stores';
 import Contact from '../screens/Contact';
+import Favorites from '../screens/Favorites';
 
 const Draw = createDrawerNavigator()
 
@@ -74,6 +75,7 @@ function DrawableNavigation() {
       <Draw.Screen name='Home' component={Index} />
       <Draw.Screen name='Shop' component={Shop} />
       <Draw.Screen name='Stores' component={Stores}/>
+      <Draw.Screen name='Favorites' component={Favorites}/>
       <Draw.Screen name='Details' component={DetailsProduct}/>
       <Draw.Screen name='Cart' component={Cart}/>
       <Draw.Screen name ='Contact' component={Contact}/>

@@ -46,6 +46,7 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
     let listArray = [
       { icon: 'home', title: 'Home', route: 'Home' },
       { icon: 'shopping-cart', title: 'Stores', route: 'Stores' },
+      { icon: 'favorite', title: 'Favorites', route: 'Favorites' },
       { icon: 'person-add', title: 'Register', route: 'Register' },
       { icon: 'login', title: 'Login', route: 'Login' },
     ];

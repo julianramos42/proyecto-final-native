@@ -7,31 +7,13 @@ import { useFocusEffect } from '@react-navigation/native';
 import CardStores from '../components/CardStores/CardStores';
 import NoCardStores from '../components/NoCardStores/NoCardStores';
 import { useDispatch,useSelector } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Stores() {
 
     const defaultText = useSelector(store => store.textStores.textStores)
     const defaultCategory = useSelector(store => store.categoriesStores.categoriesStores)
 
-
-    const [reload,setReload] = useState(false)
     const [shops,setShops] = useState({})
-    
-
-    const [token, setToken] = useState(null);
-    let headers = { headers: { 'Authorization': `Bearer ${token}` } }
-
-    useFocusEffect(
-        useCallback(() => {
-          const getTokenAndUser = async () => {
-            const storedToken = await AsyncStorage.getItem('token');
-            setToken(storedToken);
-            setReload(!reload)
-          };
-          getTokenAndUser();
-        }, [])
-    );
 
     async function getShops(){
         let url = `http://192.168.0.113:8080/shop?name=${defaultText}&category=${defaultCategory}`
