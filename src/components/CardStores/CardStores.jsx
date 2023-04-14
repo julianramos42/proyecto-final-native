@@ -104,7 +104,7 @@ export default function CardStores(props) {
         <View style={styles.card}>
             <ImageBackground style={styles.cont_banner} source={{uri:props.banner}} resizeMode='cover'>
                 <TouchableOpacity onPress={() => { handleHeartPress(props.id) }}>
-                    <Icon style={{margin:10}} name='favorite' type="material" size={30} color={iconColor}/>
+                    <Icon style={{margin:10}} name='favorite' type="material" size={30} color={token?iconColor:'white'}/>
                 </TouchableOpacity>
             </ImageBackground>
             <View style={styles.cont_name}>

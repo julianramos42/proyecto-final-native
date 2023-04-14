@@ -61,6 +61,7 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
 
     if(!token){
         bottomList = bottomList.filter((item) => item.title !== 'Logout');
+        listArray = listArray.filter((item)=> item.title!== 'Favorites')
     }
 
     const Item = ({title,icon,onPress,backgroundColor,color}) => (

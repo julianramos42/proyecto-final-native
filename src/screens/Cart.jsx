@@ -138,9 +138,9 @@ export default function Cart() {
                 } else {
                     if (typeof error.response.data.message === 'string') {
                         ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
-                    } else {
-                        error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
-                    }
+                    } else if (error.response.data === 'Unauthorized'){
+                        ToastAndroid.showWithGravity('Unauthorized, Register or log in', ToastAndroid.LONG, ToastAndroid.TOP)
+                      }
                 }
             }
         }
@@ -198,7 +198,7 @@ export default function Cart() {
                   await Linking.openURL(response.data.response.body.init_point);
                 }
             }catch(err){
-                console.log(err);
+                ToastAndroid.showWithGravity(err.response.data.error, ToastAndroid.LONG, ToastAndroid.TOP)
             }
         }
     }

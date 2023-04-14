@@ -119,8 +119,8 @@ export default function DetailsProduct() {
             } else {
                 if (typeof error.response.data.message === 'string') {
                   ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
-                } else {
-                  error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                } else if (error.response.data === 'Unauthorized'){
+                  ToastAndroid.showWithGravity('Unauthorized, Register or log in', ToastAndroid.LONG, ToastAndroid.TOP)
                 }
             }
         }

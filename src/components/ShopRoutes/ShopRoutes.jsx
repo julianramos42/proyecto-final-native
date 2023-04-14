@@ -11,7 +11,6 @@ export default function ShopRoutes(props) {
     const [pressedButtonIndex, setPressedButtonIndex] = useState(1);
     const [products,setProducts] = useState([])
     const navigation = useNavigation()
-    const [shopId,setShopId] = useState(props.id)
 
 
     const [token, setToken] = useState(null);
@@ -22,6 +21,7 @@ export default function ShopRoutes(props) {
           const getTokenAndUser = async () => {
             const storedToken = await AsyncStorage.getItem('token');
             setToken(storedToken);
+            setReload(!reload)
           };
           getTokenAndUser();
         }, [])
@@ -43,12 +43,9 @@ export default function ShopRoutes(props) {
     useFocusEffect(
         useCallback(()=>{
             getProducts()
-        },[])
+        },[reload])
     )
 
-    useEffect(()=>{
-        getProducts()
-    },[props.id])
 
     const handlePress = (index) => {
       setPressedButtonIndex(index);
@@ -127,6 +124,8 @@ const styles = StyleSheet.create({
         right: '0%',
         top:' 8.2%',
         bottom: '34.38%',
+        alignItems:'center',
+        justifyContent:'center'
     }
    
 })
