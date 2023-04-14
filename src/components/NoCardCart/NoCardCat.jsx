@@ -4,7 +4,7 @@ import { View,Text,StyleSheet } from 'react-native'
 export default function NoCardCat() {
   return (
     <View style={styles.contain}>
-        <Text style={{fontSize:16,fontWeight:400}}>THERE IS NOTHING IN THE CART</Text>
+        <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}}>THERE IS NOTHING IN THE CART</Text>
     </View>
   )
 }

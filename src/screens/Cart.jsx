@@ -5,12 +5,15 @@ import { useFocusEffect, useNavigation,useRoute } from '@react-navigation/native
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import NoCardCat from '../components/NoCardCart/NoCardCat';
+import { Linking } from 'react-native';
 
 
 export default function Cart() {
     const navigation = useNavigation()
     const [products,setProducts] = useState([])
+    let [shop,setShop] = useState({})
     let [reload, setReload] = useState(false)
+    let [fullPrice, setFullPrice] = useState(0)
 
     const route = useRoute()
     const {id} = route.params
@@ -35,98 +38,109 @@ export default function Cart() {
     }
 
     async function getProducts(){
-        try{
-            let url = `http://192.168.0.113:8080/shop/${id}/cart`
-            const response = await axios.get(url,headers)
-            setProducts(response.data.products)
-            setReload(!reload)
-        }catch(err){
-            console.log(err);
+        if(token){
+            try{
+                let url = `http://192.168.0.113:8080/shop/${id}/cart`
+                const response = await axios.get(url,headers)
+                setProducts(response.data.products)
+            }catch(err){
+                console.log(err);
+            }
         }
     }
 
-    useEffect(() => {
-        getProducts()
-        handleMaxStock()
-    },[id,reload])
+    useFocusEffect(
+        useCallback(()=>{
+            getProducts()
+            handleMaxStock()
+        },[reload])
+    )
 
     const handleLessStock = async (productId) =>{
-        try{
-            let product = products.find(product => product._id === productId)
-            if(product.stock === 1){
-                let url = `http://192.168.0.113:8080/shop/cart/deleteone/${product._id}`
-                const response = await axios.delete(url,headers)
-                ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
-                setReload(!reload)
-            }else{
-                let data = {
-                    stock: product.stock -=1
+        if(token){
+            try{
+                let product = products.find(product => product._id === productId)
+                if(product.quantity === 1){
+                    let url = `http://192.168.0.113:8080/shop/cart/deleteone/${product._id}`
+                    const response = await axios.delete(url,headers)
+                    ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                    setReload(!reload)
+                }else{
+                    let data = {
+                        quantity: product.quantity -=1
+                    }
+                    let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
+                    const response = await axios.put(url,data,headers)
+                    console.log(response.data.message);
+                    setReload(!reload)
                 }
-                let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
-                const response = await axios.put(url,data,headers)
-                console.log(response.data.message);
-                setReload(!reload)
+            }catch(err){
+                console.log(err);
             }
-        }catch(err){
-            console.log(err);
         }
     }
 
     const handleMoreStock = async (productId) =>{
-        try{
+        if(token){
+            try{
 
-            let product = products.find(product => product._id === productId)
-            if(product.stock !== product.maxStock){
-                let data = {
-                    stock: product.stock +=1
+                let product = products.find(product => product._id === productId)
+                if(product.quantity !== product.maxStock){
+                    let data = {
+                        quantity: product.quantity +=1
+                    }
+                    let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
+                    const response = await axios.put(url,data,headers)
+                    console.log(response.data.message);
+                    setReload(!reload)
                 }
-                let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
-                const response = await axios.put(url,data,headers)
-                console.log(response.data.message);
-                setReload(!reload)
+    
+            }catch(err){
+                console.log(err);
             }
-
-        }catch(err){
-            console.log(err);
         }
     }
 
     const deleteOne = async (productId) => {
-        try{
-            let url = `http://192.168.0.113:8080/shop/cart/deleteone/${productId}`
-            const response = await axios.delete(url,headers)
-            ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
-            setReload(!reload)
-        }catch(error){
-            if (error.code === "ERR_NETWORK") {
-                console.log('Network Error')
-                ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
-            } else {
-                if (typeof error.response.data.message === 'string') {
-                    ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+        if(token){
+            try{
+                let url = `http://192.168.0.113:8080/shop/cart/deleteone/${productId}`
+                const response = await axios.delete(url,headers)
+                ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                setReload(!reload)
+            }catch(error){
+                if (error.code === "ERR_NETWORK") {
+                    console.log('Network Error')
+                    ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
                 } else {
-                    error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                    if (typeof error.response.data.message === 'string') {
+                        ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                    } else {
+                        error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                    }
                 }
             }
         }
     }
 
     const deleteAll = async () =>{
-        try{
+        if(token){
+            try{
 
-            let url = `http://192.168.0.113:8080/shop/${id}/cart/deleteall`
-            const response = await axios.delete(url,headers)
-            ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
-            setReload(!reload)
-        }catch(error){
-            if (error.code === "ERR_NETWORK") {
-                console.log('Network Error')
-                ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
-            } else {
-                if (typeof error.response.data.message === 'string') {
-                    ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                let url = `http://192.168.0.113:8080/shop/${id}/cart/deleteall`
+                const response = await axios.delete(url,headers)
+                ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                setReload(!reload)
+            }catch(error){
+                if (error.code === "ERR_NETWORK") {
+                    console.log('Network Error')
+                    ToastAndroid.showWithGravity('Network Error', ToastAndroid.LONG, ToastAndroid.TOP)
                 } else {
-                    error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                    if (typeof error.response.data.message === 'string') {
+                        ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
+                    } else if (error.response.data === 'Unauthorized'){
+                        ToastAndroid.showWithGravity('Unauthorized, Register or log in', ToastAndroid.LONG, ToastAndroid.TOP)
+                      }
                 }
             }
         }
@@ -135,9 +149,9 @@ export default function Cart() {
     function handleMaxStock(){
         try{
             products.forEach( product => {
-                if(product.stock > product.maxStock){
+                if(product.quantity > product.maxStock){
                     let data = {
-                        stock: product.maxStock
+                        quantity: product.maxStock
                     }
                     let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
                     axios.put(url, data, headers).then(res => ToastAndroid.showWithGravity('Some items stock has been modified because they exceed the limit', ToastAndroid.LONG, ToastAndroid.TOP))    
@@ -152,11 +166,57 @@ export default function Cart() {
         handleMaxStock()
     },[products])
 
+    let shopUrl = `http://192.168.0.113:8080/shop/${id}`
+
+    async function getShop(){
+        try{
+            const response = await axios.get(shopUrl)
+            setShop(response.data.shop)
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+    useFocusEffect(
+        useCallback(()=>{
+            getShop()
+        },[id])
+    )
+
+    async function handlePay(){
+        let data ={
+            products,
+            token: shop.token,
+            shopId: shop._id
+        }
+        let url = `http://192.168.0.113:8080/payment`
+        if(token){
+            try{
+                const response = await axios.post(url,data,headers)
+                const puedeAbrir = await Linking.canOpenURL(response.data.response.body.init_point);
+                if (puedeAbrir) {
+                  await Linking.openURL(response.data.response.body.init_point);
+                }
+            }catch(err){
+                ToastAndroid.showWithGravity(err.response.data.error, ToastAndroid.LONG, ToastAndroid.TOP)
+            }
+        }
+    }
+
+
+    useEffect(()=>{
+        let template = 0
+        products.map(product => {
+            template += product.unit_price*product.quantity
+        })
+        setFullPrice(template)
+    },[products])
+
   return (
     <View style={styles.contain}>
         <View style={styles.header_cart}>
             <View style={styles.text_header}>
-                <Text style={{fontSize:20,fontWeight:500,color:'#566270'}}>Cart ({products.length})</Text>
+                <Text style={{fontSize:20,fontFamily:'Montserrat-Medium',color:'#566270'}}>Cart ({products.length})</Text>
                 <TouchableOpacity  style={{width:30,height:30 ,justifyContent:'center',alignItems:'center'}} onPress={handleReturn}>
                     <Image source={require('../../images/volver.png')} resizeMode='cover'/>
                 </TouchableOpacity>
@@ -172,25 +232,30 @@ export default function Cart() {
                       storeId={item.store_id}
                       id={item._id}
                       img={item.photo}
-                      name={item.name}
-                      price={item.price}
+                      name={item.title}
+                      price={item.unit_price}
                       des={item.description}
-                      stock={item.stock}
+                      stock={item.quantity}
                       LessStock={handleLessStock}
                       MoreStock={handleMoreStock}
                       delet={deleteOne}
                     />
                   )}
                   ListEmptyComponent={<NoCardCat/>}
+                  removeClippedSubviews={true}
+                  maxToRenderPerBatch={10}
+                  updateCellsBatchingPeriod={50}
+                  initialNumToRender={6}
+                  windowSize={21}
                 />
             </View>
         </View>
         <View style={styles.btn_cart}>
             <TouchableOpacity style={styles.btn} >
-                <Text style={{fontSize:20,fontWeight:600,color:'white'}}>BUY CART</Text>
+                <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'white'}} onPress={handlePay}>BUY CART ({fullPrice})</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn2} >
-                <Text style={{fontSize:20,fontWeight:600,color:'#5BB35F'}} onPress={deleteAll}>CLEAR CART</Text>
+                <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'#5BB35F'}} onPress={deleteAll}>CLEAR CART</Text>
             </TouchableOpacity>
         </View>
     </View>

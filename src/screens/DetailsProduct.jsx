@@ -94,10 +94,15 @@ export default function DetailsProduct() {
                     let url = `http://192.168.0.113:8080/shop/${ShopId}/createcartproduct`
                     let headers = {headers:{'Authorization': `Bearer ${token}`}}
                     let data = {
-                        ...detail,
-                        maxStock: maxStock
+                        title: detail.name,
+                        unit_price: detail.price,
+                        photo: detail.photo,
+                        quantity: detail.stock,
+                        maxStock: maxStock,
+                        category: detail.category,
+                        description: detail.description,
                     }
-                    data.stock = count
+                    data.quantity = count
                     const response = await axios.post(url,data,headers)
                         ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                         setCount(0)
@@ -114,8 +119,8 @@ export default function DetailsProduct() {
             } else {
                 if (typeof error.response.data.message === 'string') {
                   ToastAndroid.showWithGravity(error.response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
-                } else {
-                  error.response.data.message.forEach(err => ToastAndroid.showWithGravity(err, ToastAndroid.LONG, ToastAndroid.TOP))
+                } else if (error.response.data === 'Unauthorized'){
+                  ToastAndroid.showWithGravity('Unauthorized, Register or log in', ToastAndroid.LONG, ToastAndroid.TOP)
                 }
             }
         }
@@ -131,13 +136,13 @@ export default function DetailsProduct() {
                 <View style={styles.count_item}>
                     <View style={styles.count}>
                         <TouchableOpacity style={styles.btn_count} onPress={handleRest}>
-                            <Text style={{fontSize:16,fontWeight:400}}>-</Text>
+                            <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}}>-</Text>
                         </TouchableOpacity>
                         <View style={styles.number}>
-                            <Text style={{fontSize:16,fontWeight:400}}>{count}</Text>
+                            <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}}>{count}</Text>
                         </View>
                         <TouchableOpacity style={styles.btn_count}>
-                            <Text style={{fontSize:16,fontWeight:400}} onPress={handleSum}>+</Text>
+                            <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}} onPress={handleSum}>+</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -146,7 +151,7 @@ export default function DetailsProduct() {
             <View style={styles.cont_btn}>
                 <View style={styles.btn_cart}>
                     <TouchableOpacity style={styles.btn} onPress={handleCart}>
-                        <Text style={{fontSize:20,fontWeight:600,color:'white'}} onPress={handleCart}>ADD TO CART</Text>
+                        <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'white'}} onPress={handleCart}>ADD TO CART</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.footer}>
@@ -246,7 +251,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         paddingTop:21,
         fontSize:20,
-        fontWeight:400,
+        fontFamily:'Montserrat-Regular',
         color:'white'
     }
 

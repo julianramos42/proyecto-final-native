@@ -6,9 +6,9 @@ export default function Description(props) {
     <View style={styles.description}>
         <View style={styles.title}>
             <View style={styles.cont_des}>
-                <Text style={{fontSize:20,fontWeight:500}}>DESCRIPTION</Text>
+                <Text style={{fontSize:20,fontFamily:'Montserrat-Medium',}}>DESCRIPTION</Text>
             </View>
-            <Text style={{fontSize:14,fontWeight:400}}>Only {props.stock} items in stock</Text>
+            <Text style={{fontSize:14,fontFamily:'Montserrat-Regular',}}>Only {props.stock} items in stock</Text>
         </View>        
         <View style={styles.text_description}>
             <Text style={styles.text}>{props.des}</Text>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:25,
     },
     cont_des:{
-        width:130,
+        width:148,
         height:38,
         display:'flex',
         justifyContent:'center',
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     text:{
         width:355,
         fontSize:16,
-        fontWeight:400,
+        fontFamily:'Montserrat-Regular',
         lineHeight: 22, 
         letterSpacing: 0.5,
     }

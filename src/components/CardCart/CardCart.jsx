@@ -11,26 +11,26 @@ export default function CardCart(props) {
             </TouchableOpacity>
         </View>
         <View style={styles.cont_name}>
-            <Text style={{fontSize:20,fontWeight:500,color:'#566270'}}>{props.name}</Text>
-            <Text style={{fontSize:18,fontWeight:500}}>${props.price}</Text>
+            <Text style={{fontSize:20,fontFamily:'Montserrat-Medium',color:'#566270'}}>{props.name}</Text>
+            <Text style={{fontSize:18,fontFamily:'Montserrat-Medium'}}>${props.price}</Text>
         </View>
         <View style={styles.cont_count}>
             <View style={styles.count}>
                 <TouchableOpacity style={styles.btn_count} onPress={() => props.LessStock(props.id)}>
-                    <Text style={{fontSize:16,fontWeight:400}}>-</Text>
+                    <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}}>-</Text>
                 </TouchableOpacity>
                 <View style={styles.number}>
-                    <Text style={{fontSize:16,fontWeight:400}}>{props.stock}</Text>
+                    <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}}>{props.stock}</Text>
                 </View>
                 <TouchableOpacity style={styles.btn_count} onPress={() => props.MoreStock(props.id)}>
-                    <Text style={{fontSize:16,fontWeight:400}} >+</Text>
+                    <Text style={{fontSize:16,fontFamily:'Montserrat-Regular'}} >+</Text>
                 </TouchableOpacity>
             </View>
         </View>
         <View style={styles.cont_description}>
             <View style={styles.name}>
                 <View style={styles.title}>
-                    <Text style={{fontSize:20,fontWeight:500}}>DESCRIPTION</Text>
+                    <Text style={{fontSize:20,fontFamily:'Montserrat-Medium'}}>DESCRIPTION</Text>
                 </View>
             </View>
             <View style={styles.description}>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     },
     title:{
         flex:1,
-        width:135,
+        width:148,
         borderBottomWidth:2,
         alignItems:'center',
         justifyContent:'center',
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     text:{
         width:355,
         fontSize:12,
-        fontWeight:400,
+        fontFamily:'Montserrat-Regular',
         lineHeight: 20, 
         letterSpacing: 0.5,
         paddingVertical:5

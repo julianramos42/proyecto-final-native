@@ -13,7 +13,9 @@ import Cart from '../screens/Cart'
 import CustomDrawerContain from './CustomDrawerContain'
 import Logout from '../screens/Logout'
 import axios from 'axios';
-
+import Stores from '../screens/Stores';
+import Contact from '../screens/Contact';
+import Favorites from '../screens/Favorites';
 
 const Draw = createDrawerNavigator()
 
@@ -59,8 +61,7 @@ function DrawableNavigation() {
       },2000)
     } catch (err) {
       setLoad(false)
-      console.log(err);
-      // ToastAndroid.show("You're already signed out or not signed in", ToastAndroid.LONG);
+      ToastAndroid.show("You're already signed out or not signed in", ToastAndroid.LONG);
     }
   }
 
@@ -73,8 +74,11 @@ function DrawableNavigation() {
     >
       <Draw.Screen name='Home' component={Index} />
       <Draw.Screen name='Shop' component={Shop} />
+      <Draw.Screen name='Stores' component={Stores}/>
+      <Draw.Screen name='Favorites' component={Favorites}/>
       <Draw.Screen name='Details' component={DetailsProduct}/>
       <Draw.Screen name='Cart' component={Cart}/>
+      <Draw.Screen name ='Contact' component={Contact}/>
       <Draw.Screen name='Register' component={Register} options={{ headerShown: false }} />
       <Draw.Screen name='Login' component={Login} options={{ headerShown: false }} />
       <Draw.Screen name='Logout' component={Logout} options={{title: 'Logout'}}/>

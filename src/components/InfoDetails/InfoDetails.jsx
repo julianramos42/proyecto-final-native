@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
     category:{
         color:'#999999',
         fontSize:16,
-        fontWeight:400
+        fontFamily:'Montserrat-Regular'
     },
     name:{
         fontSize:40,
-        fontWeight:500
+        fontFamily:'Montserrat-Medium'
     },
     price:{
         fontSize:20,
-        fontWeight:500
+        fontFamily:'Montserrat-Medium'
     }
 })

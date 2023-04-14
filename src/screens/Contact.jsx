@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   title: {
-    fontSize: 54,
-    fontWeight: 'bold',
+    fontSize: 50,
+    fontFamily:'Montserrat-Bold'
   },
   contInfoContact: {
     height: "100%",
@@ -75,13 +75,14 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   titleInfo: {
-    fontWeight: 'bold',
+    fontFamily:'Montserrat-Bold',
     fontSize: 20,
     marginRight: 10,
     marginBottom: 10
   },
   info: {
     fontSize: 14,
+    fontFamily:'Montserrat-Medium',
     width: 170
   },
 });

@@ -1,8 +1,16 @@
 import React from 'react'
 import { Text, View,ImageBackground,StyleSheet,StatusBar,Dimensions} from 'react-native'
 import BtnIndex from '../components/BtnIndex/BtnIndex'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Home() {
+
+  const navigation = useNavigation()
+
+  const handleNavigate = () =>{
+    navigation.navigate('Stores')
+  }
+
   return (
     <View style={{flex:1}}>
         <ImageBackground source={require('../../images/img_home.jpg')} style={styles.img_home} resizeMode='cover'>
@@ -14,7 +22,7 @@ export default function Home() {
             </View>
           </View>
           <View style={styles.cont_btn}>
-            <BtnIndex name='See all stores' color='white' bg='#495464'/>
+            <BtnIndex name='See all stores' color='white' bg='#495464' Press={handleNavigate}/>
           </View>
         </ImageBackground>
     </View>
@@ -38,11 +46,11 @@ const styles = StyleSheet.create({
   },
   text_1:{
     fontSize:22,
-    fontWeight:500
+    fontFamily:'Montserrat-Medium'
   },
   text_2:{
     fontSize:45,
-    fontWeight:700
+    fontFamily:'Montserrat-Bold'
   },
   cont_btn:{
     flex:0.5,

@@ -6,13 +6,12 @@ import SearchStore from '../SearchStore/SearchStore'
 import axios from 'axios'
 
 
-export default function SearchSection() {
+export default function SearchSection(props) {
 
     const [shop,setShop] = useState({})
 
-    // const route = useRoute();
-    // const { id } = route.params;
-    const id = '642c487e7b721ca6a2bf0a47' // id que llega por params tando de lo de facu como de la navegacion del returnDetails
+    
+    const id = props.id 
     let url = 'http://192.168.0.113:8080/shop/'+id
 
     useFocusEffect(
@@ -26,7 +25,7 @@ export default function SearchSection() {
                 }
             }
             getShop()
-        },[])
+        },[id])
     )
     
   return (

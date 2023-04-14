@@ -1,8 +1,16 @@
 import React from 'react'
 import { Text, View,StyleSheet,Image,Dimensions } from 'react-native'
 import BtnIndex from '../components/BtnIndex/BtnIndex'
+import { useNavigation } from '@react-navigation/native'
 
 export default function About() {
+
+    const navigation = useNavigation()
+    
+    const handleNavigation = () =>{
+        navigation.navigate('Contact')
+    } 
+
   return (
     <View style={styles.contain}>
         <View style={styles.title_about}>
@@ -13,7 +21,7 @@ export default function About() {
             <Image style={styles.img_a} source={require('../../images/Diseño.jpg')}/>
         </View>
         <View style={styles.btn_about}>
-            <BtnIndex name='Contact us now' color='#495464' bg='white'/>
+            <BtnIndex name='Contact us now' color='#495464' bg='white' Press={handleNavigation}/>
         </View>
       </View>
   )
@@ -39,12 +47,12 @@ const styles = StyleSheet.create({
     },
     title:{
         fontSize:50,
-        fontWeight:700,
+        fontFamily:'Montserrat-Bold',
         color:'white'
     },
     inf_about:{
         fontSize:20,
-        fontWeight:600,
+        fontFamily:'Montserrat-SemiBold',
         color:'white',
         width:330
     },

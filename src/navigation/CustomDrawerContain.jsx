@@ -45,7 +45,8 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
 
     let listArray = [
       { icon: 'home', title: 'Home', route: 'Home' },
-      { icon: 'shopping-cart', title: 'Shop', route: 'Shop' },
+      { icon: 'shopping-cart', title: 'Stores', route: 'Stores' },
+      { icon: 'favorite', title: 'Favorites', route: 'Favorites' },
       { icon: 'person-add', title: 'Register', route: 'Register' },
       { icon: 'login', title: 'Login', route: 'Login' },
     ];
@@ -60,6 +61,7 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
 
     if(!token){
         bottomList = bottomList.filter((item) => item.title !== 'Logout');
+        listArray = listArray.filter((item)=> item.title!== 'Favorites')
     }
 
     const Item = ({title,icon,onPress,backgroundColor,color}) => (
@@ -97,9 +99,9 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
         <View style={{flex:0.3,paddingTop:50,borderBottomColor:'rgba(0, 0, 0, 0.25)',borderBottomWidth:1,gap:10}}>
             <Image source={user?.photo?{uri:user?.photo}:require('../../images/userPhoto.jpg')} style={{height:100,width:100,borderRadius:50,marginHorizontal:20}}/>
             <View style={{backgroundColor:'#495464',justifyContent:'center',paddingVertical:10,paddingLeft:20}}>
-              <Text style={{fontWeight:'bold',fontSize:22,color:'white'}}>{user?.name?user?.name:'User Name'}</Text>
-              <View style={{marginTop:5,marginLeft:10,flexDirection:'row',alignItems:'center',gap:2}}>
-                <Text style={{fontSize:16,color:'white'}}>{user?.name?`${follow} followers`:`0 followers`}</Text>
+              <Text style={{fontFamily:'Montserrat-Bold',fontSize:22,color:'white'}}>{user?.name?user?.name:'User Name'}</Text>
+              <View style={{marginTop:5,flexDirection:'row',alignItems:'center',gap:2}}>
+                <Text style={{fontFamily:'Montserrat-Regular',fontSize:16,color:'white'}}>{user?.name?`${follow} Followers`:`0 Followers`}</Text>
                 <Icon name='supervised-user-circle' type='material' size={20} color='white' />
               </View>
             </View>
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 18,
-      fontWeight:600,
+      fontFamily:'Montserrat-SemiBold',
       marginLeft:20
     },
 });
