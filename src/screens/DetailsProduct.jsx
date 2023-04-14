@@ -94,10 +94,15 @@ export default function DetailsProduct() {
                     let url = `http://192.168.0.113:8080/shop/${ShopId}/createcartproduct`
                     let headers = {headers:{'Authorization': `Bearer ${token}`}}
                     let data = {
-                        ...detail,
-                        maxStock: maxStock
+                        title: detail.name,
+                        unit_price: detail.price,
+                        photo: detail.photo,
+                        quantity: detail.stock,
+                        maxStock: maxStock,
+                        category: detail.category,
+                        description: detail.description,
                     }
-                    data.stock = count
+                    data.quantity = count
                     const response = await axios.post(url,data,headers)
                         ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                         setCount(0)

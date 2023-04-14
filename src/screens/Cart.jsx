@@ -5,12 +5,15 @@ import { useFocusEffect, useNavigation,useRoute } from '@react-navigation/native
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import NoCardCat from '../components/NoCardCart/NoCardCat';
+import { Linking } from 'react-native';
 
 
 export default function Cart() {
     const navigation = useNavigation()
     const [products,setProducts] = useState([])
+    let [shop,setShop] = useState({})
     let [reload, setReload] = useState(false)
+    let [fullPrice, setFullPrice] = useState(0)
 
     const route = useRoute()
     const {id} = route.params
@@ -40,30 +43,31 @@ export default function Cart() {
                 let url = `http://192.168.0.113:8080/shop/${id}/cart`
                 const response = await axios.get(url,headers)
                 setProducts(response.data.products)
-                setReload(!reload)
             }catch(err){
                 console.log(err);
             }
         }
     }
 
-    useEffect(() => {
-        getProducts()
-        handleMaxStock()
-    },[id,reload])
+    useFocusEffect(
+        useCallback(()=>{
+            getProducts()
+            handleMaxStock()
+        },[reload])
+    )
 
     const handleLessStock = async (productId) =>{
         if(token){
             try{
                 let product = products.find(product => product._id === productId)
-                if(product.stock === 1){
+                if(product.quantity === 1){
                     let url = `http://192.168.0.113:8080/shop/cart/deleteone/${product._id}`
                     const response = await axios.delete(url,headers)
                     ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                     setReload(!reload)
                 }else{
                     let data = {
-                        stock: product.stock -=1
+                        quantity: product.quantity -=1
                     }
                     let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
                     const response = await axios.put(url,data,headers)
@@ -81,9 +85,9 @@ export default function Cart() {
             try{
 
                 let product = products.find(product => product._id === productId)
-                if(product.stock !== product.maxStock){
+                if(product.quantity !== product.maxStock){
                     let data = {
-                        stock: product.stock +=1
+                        quantity: product.quantity +=1
                     }
                     let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
                     const response = await axios.put(url,data,headers)
@@ -145,9 +149,9 @@ export default function Cart() {
     function handleMaxStock(){
         try{
             products.forEach( product => {
-                if(product.stock > product.maxStock){
+                if(product.quantity > product.maxStock){
                     let data = {
-                        stock: product.maxStock
+                        quantity: product.maxStock
                     }
                     let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
                     axios.put(url, data, headers).then(res => ToastAndroid.showWithGravity('Some items stock has been modified because they exceed the limit', ToastAndroid.LONG, ToastAndroid.TOP))    
@@ -160,6 +164,52 @@ export default function Cart() {
 
     useEffect(() => {
         handleMaxStock()
+    },[products])
+
+    let shopUrl = `http://192.168.0.113:8080/shop/${id}`
+
+    async function getShop(){
+        try{
+            const response = await axios.get(shopUrl)
+            setShop(response.data.shop)
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+    useFocusEffect(
+        useCallback(()=>{
+            getShop()
+        },[id])
+    )
+
+    async function handlePay(){
+        let data ={
+            products,
+            token: shop.token,
+            shopId: shop._id
+        }
+        let url = `http://192.168.0.113:8080/payment`
+        if(token){
+            try{
+                const response = await axios.post(url,data,headers)
+                const puedeAbrir = await Linking.canOpenURL(response.data.response.body.init_point);
+                if (puedeAbrir) {
+                  await Linking.openURL(response.data.response.body.init_point);
+                }
+            }catch(err){
+                console.log(err);
+            }
+        }
+    }
+
+
+    useEffect(()=>{
+        let template = 0
+        products.map(product => {
+            template += product.unit_price*product.quantity
+        })
+        setFullPrice(template)
     },[products])
 
   return (
@@ -182,10 +232,10 @@ export default function Cart() {
                       storeId={item.store_id}
                       id={item._id}
                       img={item.photo}
-                      name={item.name}
-                      price={item.price}
+                      name={item.title}
+                      price={item.unit_price}
                       des={item.description}
-                      stock={item.stock}
+                      stock={item.quantity}
                       LessStock={handleLessStock}
                       MoreStock={handleMoreStock}
                       delet={deleteOne}
@@ -202,7 +252,7 @@ export default function Cart() {
         </View>
         <View style={styles.btn_cart}>
             <TouchableOpacity style={styles.btn} >
-                <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'white'}}>BUY CART</Text>
+                <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'white'}} onPress={handlePay}>BUY CART ({fullPrice})</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn2} >
                 <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'#5BB35F'}} onPress={deleteAll}>CLEAR CART</Text>
