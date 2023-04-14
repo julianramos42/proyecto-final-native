@@ -1,20 +1,39 @@
-import React,{useState} from 'react'
+import React,{useCallback, useState} from 'react'
 import { View,Text,StyleSheet,TouchableOpacity } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
 import categoriesAction from '../../store/Categories/actions'
 import { useDispatch,useSelector } from 'react-redux'
+import axios from 'axios'
+import { useFocusEffect } from '@react-navigation/native'
 
 const {captureCategories} = categoriesAction
 
-export default function Dropdowns() {
+export default function Dropdowns(props) {
 
 
   const dispatch = useDispatch();
+  const [categories,setCategories]=useState([])
   
-    const data = [
-        { label: 'Computacion', value: 'Computacion' },
-        { label: 'Computacion2', value: 'Computacion2' },
-    ];
+    async function handleCategories (){
+      let url=`http://192.168.0.113:8080/categories/${props.shopId}`
+      try{
+        const response = await axios.get(url)
+        setCategories(response.data.categories);
+      }catch(err){
+        console.log(err);
+      }
+    }
+
+    const data = categories.map(category => ({
+      label: category.category_name,
+      value: category.category_name
+    }));
+
+    useFocusEffect(
+      useCallback(()=>{
+        handleCategories()
+      },[])
+    )
 
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);

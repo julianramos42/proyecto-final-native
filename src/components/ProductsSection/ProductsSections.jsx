@@ -35,7 +35,7 @@ export default function ProductsSections(props) {
   return (
     <View style={styles.cont_products}>
       <View style={styles.cat_sort}>
-        <Dropdowns/>
+        <Dropdowns shopId ={id}/>
         <TouchableOpacity style={styles.btn_sort} onPress={() => setSort(sort === 1 ? -1 : 1)}>
           <Text style={styles.text_sort}>Sort</Text>
           <Image  source={require('../../../images/flechaSort.png')} resizeMode='cover'/>
