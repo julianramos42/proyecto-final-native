@@ -46,7 +46,6 @@ export default function ShopRoutes(props) {
         },[])
     )
 
-    console.log(products);
 
     const handlePress = (index) => {
       setPressedButtonIndex(index);
