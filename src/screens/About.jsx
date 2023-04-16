@@ -21,7 +21,7 @@ export default function About() {
             <Image style={styles.img_a} source={require('../../images/Diseño.jpg')}/>
         </View>
         <View style={styles.btn_about}>
-            <BtnIndex name='Contact us now' color='#495464' bg='white' Press={handleNavigation}/>
+            <BtnIndex name='Contact us now' color='#161616' bg='white' Press={handleNavigation}/>
         </View>
       </View>
   )

@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     drop:{
         width:'90%',
         height:58,
-        backgroundColor:'#495464',
+        backgroundColor:'#161616',
         borderRadius:6,
         justifyContent:'center',
         alignItems:'center'

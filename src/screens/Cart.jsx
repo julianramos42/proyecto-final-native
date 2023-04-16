@@ -255,7 +255,7 @@ export default function Cart() {
                 <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'white'}} onPress={handlePay}>BUY CART ({fullPrice})</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn2} >
-                <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'#5BB35F'}} onPress={deleteAll}>CLEAR CART</Text>
+                <Text style={{fontSize:20,fontFamily:'Montserrat-SemiBold',color:'#161616'}} onPress={deleteAll}>CLEAR CART</Text>
             </TouchableOpacity>
         </View>
     </View>
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#5BB35F',
+        backgroundColor:'#161616',
         borderRadius:20
     },
     btn2:{
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'rgba(91, 179, 95, 0.34);',
+        backgroundColor:'rgba(22, 22, 22, 0.34)',
         borderRadius:20
     }
 })

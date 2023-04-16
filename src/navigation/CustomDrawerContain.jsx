@@ -72,7 +72,7 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
     );
 
     const renderItem = ({item}) => {
-        const backgroundColor = item.title === selectedId ? '#495464' : 'white';
+        const backgroundColor = item.title === selectedId ? '#161616' : 'white';
         const color = item.title === selectedId ? 'white' : 'black';
        return(
             <Item
@@ -98,7 +98,7 @@ export default function CustomDrawerContain({navigation,handleLogout,reload}) {
     <View style={{flex:1}}>
         <View style={{flex:0.3,paddingTop:50,borderBottomColor:'rgba(0, 0, 0, 0.25)',borderBottomWidth:1,gap:10}}>
             <Image source={user?.photo?{uri:user?.photo}:require('../../images/userPhoto.jpg')} style={{height:100,width:100,borderRadius:50,marginHorizontal:20}}/>
-            <View style={{backgroundColor:'#495464',justifyContent:'center',paddingVertical:10,paddingLeft:20}}>
+            <View style={{backgroundColor:'#161616',justifyContent:'center',paddingVertical:10,paddingLeft:20}}>
               <Text style={{fontFamily:'Montserrat-Bold',fontSize:22,color:'white'}}>{user?.name?user?.name:'User Name'}</Text>
               <View style={{marginTop:5,flexDirection:'row',alignItems:'center',gap:2}}>
                 <Text style={{fontFamily:'Montserrat-Regular',fontSize:16,color:'white'}}>{user?.name?`${follow} Followers`:`0 Followers`}</Text>

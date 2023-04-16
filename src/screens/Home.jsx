@@ -22,7 +22,7 @@ export default function Home() {
             </View>
           </View>
           <View style={styles.cont_btn}>
-            <BtnIndex name='See all stores' color='white' bg='#495464' Press={handleNavigate}/>
+            <BtnIndex name='See all stores' color='white' bg='#161616' Press={handleNavigate}/>
           </View>
         </ImageBackground>
     </View>

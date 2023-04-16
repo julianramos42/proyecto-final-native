@@ -227,14 +227,14 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#5BB35F',
+        backgroundColor:'#161616',
         borderRadius:20
     },
     footer:{
         flex:0.7,
         display:'flex',
         alignItems:'center',
-        backgroundColor:'#566270'
+        backgroundColor:'#161616'
     },
     logo_foot:{
         flex:0.6,

@@ -62,7 +62,7 @@ export default function CardFavorite(props) {
             <View style={styles.cont_name}>
                 <Text style={{paddingTop:45,fontSize:14,fontFamily:'Montserrat-SemiBold'}}>{props.name}</Text>
                 <Text style={{fontSize:12,fontFamily:'Montserrat-Regular'}}>{props.cat}</Text>
-                <TouchableOpacity style={{paddingVertical:4,paddingHorizontal:6,backgroundColor:'#495464',marginTop:10,borderRadius:4}} onPress={handleNavigation}>
+                <TouchableOpacity style={{paddingVertical:4,paddingHorizontal:6,backgroundColor:'#161616',marginTop:10,borderRadius:4,elevation: 8}} onPress={handleNavigation}>
                     <Text style={{fontSize:12,fontFamily:'Montserrat-SemiBold',color:'white'}}>Visit Store</Text>
                 </TouchableOpacity>
             </View>
