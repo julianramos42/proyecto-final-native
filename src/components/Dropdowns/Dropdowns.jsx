@@ -29,11 +29,6 @@ export default function Dropdowns(props) {
       value: category.category_name
     }));
 
-    useFocusEffect(
-      useCallback(()=>{
-        handleCategories()
-      },[])
-    )
 
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
@@ -49,6 +44,12 @@ export default function Dropdowns(props) {
       setIsFocus(false);
       dispatch(captureCategories({inputCategory: item.value})); // dispatch value
     };
+
+    useFocusEffect(
+      useCallback(()=>{
+        handleCategories()
+      },[isFocus])
+    )
 
 
   return (

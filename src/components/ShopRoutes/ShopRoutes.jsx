@@ -43,9 +43,10 @@ export default function ShopRoutes(props) {
     useFocusEffect(
         useCallback(()=>{
             getProducts()
-        },[reload])
+        },[])
     )
 
+    console.log(products);
 
     const handlePress = (index) => {
       setPressedButtonIndex(index);

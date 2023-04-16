@@ -30,7 +30,7 @@ export default function SearchSection(props) {
     
   return (
     <View style={styles.cont_search}>
-        <ImageBackground style={styles.img_Search} imageStyle={{backgroundColor:'rgba(0, 0, 0, 0.65)',blendMode: 'darken'}} source={{uri:shop?.banner}} resizeMode='cover'>
+        <ImageBackground style={styles.img_Search} source={{uri:shop?.banner}} resizeMode='cover'>
             <View style={styles.mask} />
                 <View style={styles.cont_Logo}>
                   <Image style={{ width: 113, height: 74, borderRadius: 50 }} source={{ uri: shop?.photo }} resizeMode='cover' />
