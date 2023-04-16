@@ -68,7 +68,7 @@ function DrawableNavigation() {
 
   return (
     <Draw.Navigator 
-    screenOptions={{ headerTransparent: true }}
+    screenOptions={{ headerTransparent: true ,headerTintColor:'#C2C2C2',}}
     drawerContent={(props) => <CustomDrawerContain {...props} navigation={props.navigation} handleLogout={handleLogout} reload={load}/>}
     initialRouteName='Home'
     >

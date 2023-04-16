@@ -43,7 +43,7 @@ export default function ShopRoutes(props) {
     useFocusEffect(
         useCallback(()=>{
             getProducts()
-        },[reload])
+        },[])
     )
 
 
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     text: {
         color:'white',
         fontSize:20,
-        fontFamily:'Montserrat-Light',
+        fontFamily:'Montserrat-Regular',
         textDecorationLine: 'none',
     },
     pressed: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     count_cart:{
         width: 21,
         height: 21,
-        backgroundColor:'#5BB35F',
+        backgroundColor:'#161616',
         textAlign:'center',
         borderRadius:50,
         fontSize:14,
