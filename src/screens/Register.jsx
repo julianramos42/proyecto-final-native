@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         lineHeight: 17,
     },
     signBtn: {
-        backgroundColor: '#495464',
+        backgroundColor: '#161616',
         borderRadius: 10,
         width: '80%',
         height: 48,
