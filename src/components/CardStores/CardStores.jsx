@@ -32,7 +32,7 @@ export default function CardStores(props) {
     );
 
     async function addFavorite(FavoriteId){
-        let url = `http://192.168.0.113:8080/favourites/${FavoriteId}`
+        let url = `https://lance-app.onrender.com/favourites/${FavoriteId}`
         if(token){
             try{
                 const response = await axios.post(url,'',headers)
@@ -44,7 +44,7 @@ export default function CardStores(props) {
     }
 
     async function deleteFavorite(FavoriteId){
-        let url = `http://192.168.0.113:8080/favourites/${FavoriteId}`
+        let url = `https://lance-app.onrender.com/favourites/${FavoriteId}`
         if(token){
             try{
                 const response = await axios.delete(url,headers)
@@ -58,7 +58,7 @@ export default function CardStores(props) {
     async function getStoresFavorites(){
         setReload(true)
         if(token){
-            let url = 'http://192.168.0.113:8080/favourites/'
+            let url = 'https://lance-app.onrender.com/favourites/'
             try{
                 const response = await axios.get(url,headers)
                 setShopFavorites(response.data.favourites)

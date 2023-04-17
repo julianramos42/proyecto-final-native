@@ -35,7 +35,7 @@ export default function CardFavorite(props) {
 
     async function deleteFavorite(FavoriteId){
         setReload(true)
-        let url = `http://192.168.0.113:8080/favourites/${FavoriteId}`
+        let url = `https://lance-app.onrender.com/favourites/${FavoriteId}`
         if(token){
             try{
                 const response = await axios.delete(url,headers)

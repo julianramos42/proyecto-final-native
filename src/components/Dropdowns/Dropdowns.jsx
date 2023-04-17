@@ -15,7 +15,7 @@ export default function Dropdowns(props) {
   const [categories,setCategories]=useState([])
   
     async function handleCategories (){
-      let url=`http://192.168.0.113:8080/categories/${props.shopId}`
+      let url=`https://lance-app.onrender.com/categories/${props.shopId}`
       try{
         const response = await axios.get(url)
         setCategories(response.data.categories);

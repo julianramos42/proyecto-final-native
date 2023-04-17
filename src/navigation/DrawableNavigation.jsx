@@ -37,7 +37,7 @@ function DrawableNavigation() {
 
   const handleLogout = async () => {
     setLoad(true)
-    let url = 'http://192.168.0.113:8080/auth/signout'
+    let url = 'https://lance-app.onrender.com/auth/signout'
     let headers = { headers: { 'Authorization': `Bearer ${token}` } };
 
     try {

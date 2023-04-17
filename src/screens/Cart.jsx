@@ -40,7 +40,7 @@ export default function Cart() {
     async function getProducts(){
         if(token){
             try{
-                let url = `http://192.168.0.113:8080/shop/${id}/cart`
+                let url = `https://lance-app.onrender.com/shop/${id}/cart`
                 const response = await axios.get(url,headers)
                 setProducts(response.data.products)
             }catch(err){
@@ -61,7 +61,7 @@ export default function Cart() {
             try{
                 let product = products.find(product => product._id === productId)
                 if(product.quantity === 1){
-                    let url = `http://192.168.0.113:8080/shop/cart/deleteone/${product._id}`
+                    let url = `https://lance-app.onrender.com/shop/cart/deleteone/${product._id}`
                     const response = await axios.delete(url,headers)
                     ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                     setReload(!reload)
@@ -69,7 +69,7 @@ export default function Cart() {
                     let data = {
                         quantity: product.quantity -=1
                     }
-                    let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
+                    let url = `https://lance-app.onrender.com/shop/cart/update/${product._id}`
                     const response = await axios.put(url,data,headers)
                     console.log(response.data.message);
                     setReload(!reload)
@@ -89,7 +89,7 @@ export default function Cart() {
                     let data = {
                         quantity: product.quantity +=1
                     }
-                    let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
+                    let url = `https://lance-app.onrender.com/shop/cart/update/${product._id}`
                     const response = await axios.put(url,data,headers)
                     console.log(response.data.message);
                     setReload(!reload)
@@ -104,7 +104,7 @@ export default function Cart() {
     const deleteOne = async (productId) => {
         if(token){
             try{
-                let url = `http://192.168.0.113:8080/shop/cart/deleteone/${productId}`
+                let url = `https://lance-app.onrender.com/shop/cart/deleteone/${productId}`
                 const response = await axios.delete(url,headers)
                 ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                 setReload(!reload)
@@ -127,7 +127,7 @@ export default function Cart() {
         if(token){
             try{
 
-                let url = `http://192.168.0.113:8080/shop/${id}/cart/deleteall`
+                let url = `https://lance-app.onrender.com/shop/${id}/cart/deleteall`
                 const response = await axios.delete(url,headers)
                 ToastAndroid.showWithGravity(response.data.message, ToastAndroid.LONG, ToastAndroid.TOP)
                 setReload(!reload)
@@ -153,7 +153,7 @@ export default function Cart() {
                     let data = {
                         quantity: product.maxStock
                     }
-                    let url = `http://192.168.0.113:8080/shop/cart/update/${product._id}`
+                    let url = `https://lance-app.onrender.com/shop/cart/update/${product._id}`
                     axios.put(url, data, headers).then(res => ToastAndroid.showWithGravity('Some items stock has been modified because they exceed the limit', ToastAndroid.LONG, ToastAndroid.TOP))    
                 }
             })
@@ -166,7 +166,7 @@ export default function Cart() {
         handleMaxStock()
     },[products])
 
-    let shopUrl = `http://192.168.0.113:8080/shop/${id}`
+    let shopUrl = `https://lance-app.onrender.com/shop/${id}`
 
     async function getShop(){
         try{
@@ -189,7 +189,7 @@ export default function Cart() {
             token: shop.token,
             shopId: shop._id
         }
-        let url = `http://192.168.0.113:8080/payment`
+        let url = `https://lance-app.onrender.com/payment`
         if(token){
             try{
                 const response = await axios.post(url,data,headers)

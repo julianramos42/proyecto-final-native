@@ -16,7 +16,7 @@ export default function Stores() {
     const [shops,setShops] = useState({})
 
     async function getShops(){
-        let url = `http://192.168.0.113:8080/shop?name=${defaultText}&category=${defaultCategory}`
+        let url = `https://lance-app.onrender.com/shop?name=${defaultText}&category=${defaultCategory}`
         try{
             const response = await axios.get(url)
             setShops(response.data.shops)

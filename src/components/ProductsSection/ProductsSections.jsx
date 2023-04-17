@@ -16,7 +16,7 @@ export default function ProductsSections(props) {
 
  
   const id = props.id 
-  let url = 'http://192.168.0.113:8080/shop/'+ id + '/products'+`?name=${defaultText}&category=${defaultCategory}&sort=${sort}`
+  let url = 'https://lance-app.onrender.com/shop/'+ id + '/products'+`?name=${defaultText}&category=${defaultCategory}&sort=${sort}`
 
   useFocusEffect(
     useCallback(()=>{

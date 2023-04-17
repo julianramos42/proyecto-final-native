@@ -28,7 +28,7 @@ export default function DetailsProduct() {
         }, [])
     );
 
-    let url = 'http://192.168.0.113:8080/product/' + id
+    let url = 'https://lance-app.onrender.com/product/' + id
 
     useFocusEffect(
         useCallback(()=>{
@@ -47,7 +47,7 @@ export default function DetailsProduct() {
     )
 
     let ShopId = detail?.store_id 
-    let urlShop = 'http://192.168.0.113:8080/shop/'+ ShopId
+    let urlShop = 'https://lance-app.onrender.com/shop/'+ ShopId
 
     async function getShop(){
         if (ShopId) { 
@@ -91,7 +91,7 @@ export default function DetailsProduct() {
         try{
             if(ShopId){
                 if(count !== 0){
-                    let url = `http://192.168.0.113:8080/shop/${ShopId}/createcartproduct`
+                    let url = `https://lance-app.onrender.com/shop/${ShopId}/createcartproduct`
                     let headers = {headers:{'Authorization': `Bearer ${token}`}}
                     let data = {
                         title: detail.name,
