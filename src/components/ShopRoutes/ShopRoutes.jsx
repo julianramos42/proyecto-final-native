@@ -31,7 +31,7 @@ export default function ShopRoutes(props) {
     async function getProducts(){
         if(props.id){
             try{
-                let url = `http://192.168.0.113:8080/shop/${props.id}/cart`
+                let url = `https://lance-app.onrender.com/shop/${props.id}/cart`
                 const response = await axios.get(url,headers)
                 setProducts(response.data.products)
             }catch(err){

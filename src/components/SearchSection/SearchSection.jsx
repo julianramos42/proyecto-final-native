@@ -12,7 +12,7 @@ export default function SearchSection(props) {
 
     
     const id = props.id 
-    let url = 'http://192.168.0.113:8080/shop/'+id
+    let url = 'https://lance-app.onrender.com/shop/'+id
 
     useFocusEffect(
         useCallback(()=>{

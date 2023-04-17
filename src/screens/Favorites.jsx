@@ -34,7 +34,7 @@ export default function Favorites() {
     );
 
     async function getFavorites(){
-        let url = `http://192.168.0.113:8080/favourites/`
+        let url = `https://lance-app.onrender.com/favourites/`
        if(token){
             try{
                 const response = await axios.get(url,headers)
@@ -46,7 +46,7 @@ export default function Favorites() {
     }
 
     async function handleDelet(){
-        let url = `http://192.168.0.113:8080/favourites/`
+        let url = `https://lance-app.onrender.com/favourites/`
         if(token){
             try{
                 const response = await axios.delete(url,headers)
