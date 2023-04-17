@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "native",
+    "name": "Lance",
     "slug": "native",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.Lance-app.native"
+      "package": "com.Lance_App.Lance_App"
     },
     "web": {
       "favicon": "./assets/favicon.png"
