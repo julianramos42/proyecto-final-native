@@ -40,28 +40,30 @@ function DrawableNavigation() {
     let url = 'https://lance-app.onrender.com/auth/signout'
     let headers = { headers: { 'Authorization': `Bearer ${token}` } };
 
-    try {
-      await axios.post(url, null, headers);
-      await AsyncStorage.setItem('token', '');
-      await AsyncStorage.setItem('user', JSON.stringify({
-        // id:'',
-        // admin: '',
-        name: '',
-        photo: '',
-        // seller: ''
-      }));
-
-      ToastAndroid.show('The session was closed successfully! !', ToastAndroid.LONG);
-      setTimeout(()=>{
+    if(token){
+      try {
+        await axios.post(url, null, headers);
+        await AsyncStorage.setItem('token', '');
+        await AsyncStorage.setItem('user', JSON.stringify({
+          // id:'',
+          // admin: '',
+          name: '',
+          photo: '',
+          // seller: ''
+        }));
+  
+        ToastAndroid.show('The session was closed successfully! !', ToastAndroid.LONG);
+        setTimeout(()=>{
+          setLoad(false)
+          navigate.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+          });
+        },2000)
+      } catch (err) {
         setLoad(false)
-        navigate.reset({
-          index: 0,
-          routes: [{ name: 'Home' }],
-        });
-      },2000)
-    } catch (err) {
-      setLoad(false)
-      ToastAndroid.show("You're already signed out or not signed in", ToastAndroid.LONG);
+        ToastAndroid.show("You're already signed out or not signed in", ToastAndroid.LONG);
+      }
     }
   }
 
